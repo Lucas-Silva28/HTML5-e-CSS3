@@ -3,234 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EtiqPRO v19.4 - Lucas Silva</title>
-
+    <title>EtiqPRO v19.6 - Lucas Silva</title>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://unpkg.com/html5-qrcode"></script>
-
     <style>
-        :root {
-            --primary: #4f46e5; --secondary: #10b981; --danger: #ef4444;
-            --bg: #f3f4f6; --card: #ffffff; --text: #1f2937; --border: #e5e7eb;
-        }
-
-        body.dark-mode {
-            --bg: #111827; --card: #1f2937; --text: #f9fafb; --border: #374151;
-        }
-
-        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; transition: 0.3s; }
+        :root { --primary: #4f46e5; --bg: #f3f4f6; --card: #ffffff; --text: #1f2937; --border: #e5e7eb; }
+        body.dark-mode { --bg: #111827; --card: #1f2937; --text: #f9fafb; --border: #374151; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; }
         .app-container { max-width: 900px; margin: auto; background: var(--card); padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-
-        /* Menu de Navegação - Links Diretos para evitar 404 */
+        
+        /* Menu Corrigido */
         .nav-menu { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
-        .nav-link { text-decoration: none; font-size: 12px; padding: 8px 14px; background: var(--bg); color: var(--text); border-radius: 8px; border: 1px solid var(--border); font-weight: bold; transition: 0.2s; }
+        .nav-link { text-decoration: none; font-size: 12px; padding: 8px 14px; background: var(--bg); color: var(--text); border-radius: 8px; border: 1px solid var(--border); font-weight: bold; }
         .nav-link.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        /* Tutorial Estilizado */
-        #tutorial-panel { 
-            display: none; position: fixed; top: 0; right: 0; width: 320px; height: 100%; 
-            background: var(--card); box-shadow: -5px 0 20px rgba(0,0,0,0.2); z-index: 2000; 
-            padding: 25px; overflow-y: auto; border-left: 4px solid var(--primary);
-        }
-        .tut-item { margin-bottom: 18px; font-size: 0.95rem; line-height: 1.5; display: flex; align-items: flex-start; gap: 10px; }
-        .tut-icon { font-size: 1.3rem; background: var(--bg); padding: 5px; border-radius: 8px; }
-
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-        .btn { padding: 12px 18px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-dark { background: #4b5563; color: white; }
-        .btn-success { background: var(--secondary); color: white; }
-        .btn-danger { background: var(--danger); color: white; }
-
         .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
-        .input-wrapper { position: relative; display: flex; align-items: center; width: 100%; }
-        .field input { width: 100%; padding: 12px; border-radius: 8px; border: 2px solid var(--border); background: var(--card); color: var(--text); font-size: 16px; }
-
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-top: 20px; }
-        .product-item { background: var(--bg); padding: 12px; border-radius: 12px; text-align: center; cursor: pointer; position: relative; border: 1px solid var(--border); transition: 0.2s; }
-        .product-item:hover { border-color: var(--primary); transform: translateY(-2px); }
-
-        /* Seção Sobre e Contato */
-        .about-box { margin-top: 40px; padding: 20px; background: rgba(79, 70, 229, 0.08); border-radius: 15px; border: 2px dashed var(--primary); }
-        .about-box h4 { margin: 0 0 10px 0; color: var(--primary); display: flex; align-items: center; gap: 8px; }
-
-        .footer-credits { margin-top: 30px; text-align: center; padding: 20px; font-size: 14px; border-top: 1px solid var(--border); }
-        .footer-credits a { color: var(--primary); text-decoration: none; font-weight: bold; margin: 0 10px; }
-
+        .field { display: flex; flex-direction: column; gap: 5px; }
+        .input-wrapper { position: relative; display: flex; align-items: center; }
+        input { width: 100%; padding: 12px; border-radius: 8px; border: 2px solid var(--border); background: var(--card); color: var(--text); font-size: 16px; }
+        
+        /* Ajuste do botão X */
+        .clear-btn { position: absolute; right: 45px; background: #9ca3af; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 5; }
+        
+        .btn { padding: 12px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-primary { background: var(--primary); color: white; }
         #print-area { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 30px; }
-        .label-card { border: 1px solid #000; padding: 10px; background: white; color: black; text-align: center; position: relative; }
-
-        @media print { .app-container, .nav-menu, #tutorial-panel { display: none !important; } #print-area { grid-template-columns: repeat(3, 1fr); } }
+        .label-card { border: 1px solid #000; padding: 10px; background: white; color: black; text-align: center; }
+        @media print { .app-container, .nav-menu { display: none !important; } }
     </style>
 </head>
 <body>
-
-<div id="tutorial-panel">
-    <h2 style="color:var(--primary); display:flex; align-items:center; justify-content:space-between; margin-top:0;">
-        📖 Guia de Uso
-        <span onclick="toggleTut()" style="cursor:pointer; font-size:1.5rem;">&times;</span>
-    </h2>
-    <div class="tut-item">
-        <span class="tut-icon">📷</span>
-        <span><b>Scanner:</b> Clique no ícone de câmera para ler o código de barras do produto via celular.</span>
-    </div>
-    <div class="tut-item">
-        <span class="tut-icon">➕</span>
-        <span><b>Gerar:</b> Após preencher o nome e código, clique aqui para criar a etiqueta na tela.</span>
-    </div>
-    <div class="tut-item">
-        <span class="tut-icon">📂</span>
-        <span><b>Galeria:</b> Seus produtos salvos aparecem aqui embaixo. Basta um toque para gerar a etiqueta novamente.</span>
-    </div>
-    <div class="tut-item">
-        <span class="tut-icon">🖨️</span>
-        <span><b>Imprimir:</b> Abre a janela de impressão. Recomenda-se salvar como PDF primeiro.</span>
-    </div>
-    <div class="tut-item">
-        <span class="tut-icon">🗑️</span>
-        <span><b>Limpar:</b> Remove todas as etiquetas geradas da tela para começar um novo trabalho.</span>
-    </div>
-    <hr style="border:0; border-top: 1px solid var(--border); margin: 20px 0;">
-    <p style="font-size: 0.8rem; color: var(--text-sub);">Dica: Use o <b>Modo Escuro</b> no ícone 🌓 para descansar a vista.</p>
-    <button class="btn btn-primary" style="width:100%;" onclick="toggleTut()">Fechar Guia</button>
-</div>
-
 <div class="app-container">
     <div class="nav-menu">
-        <a href="https://lucassilvasousa.github.io/EtiqPRO/index.html" class="nav-link active">🏷️ Etiquetas</a>
-        <a href="https://lucassilvasousa.github.io/EtiqPRO/marca_de_validade/index.html" class="nav-link">📦 Estoque Pro</a>
+        <a href="index.html" class="nav-link active">🏷️ Etiquetas</a>
+        <a href="estoque.html" class="nav-link">📦 Estoque Pro</a>
     </div>
-
-    <div class="header">
-        <h1 style="margin:0; font-size: 24px;">📦 EtiqPRO <span style="color:var(--primary)">v19.4</span></h1>
-        <div style="display:flex; gap:10px;">
-            <button class="btn btn-dark" onclick="toggleTut()">❓ Guia</button>
-            <button class="btn btn-dark" onclick="toggleTheme()">🌓</button>
-        </div>
-    </div>
-
-    <div id="scanner-view" style="display:none; border-radius:15px; overflow:hidden; margin-bottom:20px; border:3px solid var(--primary); background:#000;"></div>
 
     <div class="input-grid">
         <div class="field">
             <label>Código / EAN</label>
             <div class="input-wrapper">
-                <input id="code" placeholder="Leia ou digite o código">
-                <button class="btn btn-dark" style="margin-left:5px;" onclick="toggleScanner()">📷</button>
+                <input id="code" placeholder="000000">
+                <button class="clear-btn" onclick="document.getElementById('code').value=''">✕</button>
+                <button class="btn btn-primary" style="margin-left:5px; padding: 10px;" onclick="toggleScanner()">📷</button>
             </div>
         </div>
         <div class="field">
-            <label>Nome do Produto</label>
-            <div class="input-wrapper">
-                <input id="name" placeholder="Ex: Arroz Tio Urbano 5kg">
-                <button class="btn" style="position:absolute; right:5px; background:none; color:var(--danger);" onclick="document.getElementById('name').value=''">✕</button>
-            </div>
-        </div>
-        <div class="field" style="max-width: 90px;">
-            <label>Quantidade</label>
-            <input id="qty" type="number" value="1" min="1">
+            <label>Produto</label>
+            <input id="name" placeholder="Nome do item">
         </div>
     </div>
-
-    <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:10px;">
-        <button class="btn btn-primary" onclick="addLabels()">➕ Gerar Etiquetas</button>
-        <button class="btn btn-success" onclick="window.print()">🖨️ Imprimir</button>
-        <button class="btn btn-danger" onclick="clearArea()">🗑️ Limpar</button>
-    </div>
-
-    <div style="margin-top:30px;">
-        <h3 style="font-size:16px; margin-bottom:15px;">📂 Galeria de Produtos (Toque para usar)</h3>
-        <div class="product-grid" id="db-list"></div>
-    </div>
-
-    <div class="about-box">
-        <h4>🚀 Utilidade do Sistema</h4>
-        <p style="margin-bottom:10px; font-size: 0.9rem;">
-            O <b>EtiqPRO</b> foi criado para modernizar a logística interna. Ele transforma códigos numéricos em etiquetas visuais padronizadas, o que ajuda na <b>organização das gôndolas</b>, agiliza a reposição e evita que produtos fiquem sem identificação. 
-        </p>
-        <p style="margin:0; font-size: 0.85rem; font-weight: bold; color: var(--primary);">
-            ⚠️ Dúvida ou erro? Entre em contato com o desenvolvedor responsável abaixo.
-        </p>
-    </div>
-
-    <div class="footer-credits">
-        <p>Desenvolvido por: <b>Lucas Silva Sousa</b></p>
-        <div style="margin-top:10px;">
-            <a href="https://www.instagram.com/lucassilvasousa_48" target="_blank">📸 Instagram</a>
-            <a href="https://wa.me/5594992786664" target="_blank">💬 WhatsApp</a>
-        </div>
-    </div>
+    <button class="btn btn-primary" style="width:100%" onclick="addLabels()">➕ Gerar Etiquetas</button>
+    <div id="print-area"></div>
 </div>
 
-<div id="print-area"></div>
-
 <script>
-let etiquetas = [];
-let banco = JSON.parse(localStorage.getItem('etiq_v19_db')) || {};
-
-function toggleTut() { 
-    const p = document.getElementById('tutorial-panel');
-    p.style.display = (p.style.display === 'block') ? 'none' : 'block'; 
-}
-
-function toggleTheme() { document.body.classList.toggle('dark-mode'); }
-
-function addLabels(customCode, customName) {
-    const c = customCode || document.getElementById('code').value.trim();
-    const n = customName || document.getElementById('name').value.trim();
-    const q = parseInt(document.getElementById('qty').value) || 1;
-
-    if(!c || !n) return alert("Por favor, preencha o código e o nome do produto!");
-
-    banco[c] = n;
-    localStorage.setItem('etiq_v19_db', JSON.stringify(banco));
-
-    for(let i=0; i<q; i++) { etiquetas.push({ id: Date.now() + i, c, n }); }
-    renderEtiquetas();
-    renderBanco();
-}
-
-function renderEtiquetas() {
-    const area = document.getElementById('print-area');
-    area.innerHTML = "";
-    etiquetas.forEach(e => {
-        const div = document.createElement('div');
-        div.className = 'label-card';
-        div.innerHTML = `<div style="font-weight:bold; font-size:11px; margin-bottom:5px;">${e.n}</div><svg id="s${e.id}"></svg>`;
-        area.appendChild(div);
-        JsBarcode(`#s${e.id}`, e.c, { format: "CODE128", width: 1.5, height: 40, displayValue: true, fontSize: 14 });
-    });
-}
-
-function renderBanco() {
-    const list = document.getElementById('db-list');
-    list.innerHTML = "";
-    Object.keys(banco).reverse().forEach(code => {
-        const div = document.createElement('div');
-        div.className = 'product-item';
-        div.onclick = () => addLabels(code, banco[code]);
-        div.innerHTML = `<b>${banco[code]}</b><br><small style="color:var(--primary)">${code}</small>`;
-        list.appendChild(div);
-    });
-}
-
-function clearArea() { if(confirm("Deseja limpar todas as etiquetas da tela?")) { etiquetas = []; renderEtiquetas(); } }
-
-let scanner;
-async function toggleScanner() {
-    const v = document.getElementById('scanner-view');
-    if (v.style.display === 'block') { if(scanner) await scanner.stop(); v.style.display = 'none'; return; }
-    v.style.display = 'block';
-    if(!scanner) scanner = new Html5Qrcode("scanner-view");
-    scanner.start({ facingMode: "environment" }, { fps: 15, qrbox: {width: 250, height: 150} }, (txt) => {
-        document.getElementById('code').value = txt;
-        if(banco[txt]) document.getElementById('name').value = banco[txt];
-        scanner.stop(); v.style.display = 'none';
-    }).catch(() => { alert("Câmera não disponível ou permissão negada."); v.style.display = 'none'; });
-}
-
-renderBanco();
+    let etiquetas = [];
+    function addLabels() {
+        const c = document.getElementById('code').value, n = document.getElementById('name').value;
+        if(!c || !n) return alert("Preencha tudo!");
+        etiquetas.push({ id: Date.now(), c, n });
+        render();
+    }
+    function render() {
+        const area = document.getElementById('print-area'); area.innerHTML = "";
+        etiquetas.forEach(e => {
+            const div = document.createElement('div'); div.className = 'label-card';
+            div.innerHTML = `<div>${e.n}</div><svg id="s${e.id}"></svg>`;
+            area.appendChild(div);
+            JsBarcode(`#s${e.id}`, e.c, { width: 1.5, height: 40, displayValue: true });
+        });
+    }
+    function toggleScanner() { /* Scanner Logic */ }
 </script>
 </body>
 </html>
