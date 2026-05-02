@@ -3,78 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EtiqPRO v19.6 - Lucas Silva</title>
+    <title>EtiqPRO v19.7 - Lucas Silva</title>
+
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://unpkg.com/html5-qrcode"></script>
+
     <style>
-        :root { --primary: #4f46e5; --bg: #f3f4f6; --card: #ffffff; --text: #1f2937; --border: #e5e7eb; }
-        body.dark-mode { --bg: #111827; --card: #1f2937; --text: #f9fafb; --border: #374151; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; }
+        :root {
+            --primary: #4f46e5; --secondary: #10b981; --danger: #ef4444;
+            --bg: #f3f4f6; --card: #ffffff; --text: #1f2937; --border: #e5e7eb;
+        }
+
+        body.dark-mode {
+            --bg: #111827; --card: #1f2937; --text: #f9fafb; --border: #374151;
+        }
+
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; transition: 0.3s; }
         .app-container { max-width: 900px; margin: auto; background: var(--card); padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        
-        /* Menu Corrigido */
+
+        /* Menu de Navegação - Conectando os arquivos na raiz */
         .nav-menu { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
-        .nav-link { text-decoration: none; font-size: 12px; padding: 8px 14px; background: var(--bg); color: var(--text); border-radius: 8px; border: 1px solid var(--border); font-weight: bold; }
+        .nav-link { text-decoration: none; font-size: 12px; padding: 8px 14px; background: var(--bg); color: var(--text); border-radius: 8px; border: 1px solid var(--border); font-weight: bold; transition: 0.2s; }
         .nav-link.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .field { display: flex; flex-direction: column; gap: 5px; }
-        .input-wrapper { position: relative; display: flex; align-items: center; }
-        input { width: 100%; padding: 12px; border-radius: 8px; border: 2px solid var(--border); background: var(--card); color: var(--text); font-size: 16px; }
-        
-        /* Ajuste do botão X */
-        .clear-btn { position: absolute; right: 45px; background: #9ca3af; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 5; }
-        
-        .btn { padding: 12px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        /* Tutorial Lateral */
+        #tutorial-panel { 
+            display: none; position: fixed; top: 0; right: 0; width: 300px; height: 100%; 
+            background: var(--card); box-shadow: -5px 0 20px rgba(0,0,0,0.2); z-index: 2000; 
+            padding: 25px; overflow-y: auto; border-left: 4px solid var(--primary);
+        }
+        .tut-item { margin-bottom: 15px; font-size: 0.9rem; line-height: 1.4; display: flex; align-items: center; gap: 10px; }
+
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .btn { padding: 12px 18px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
         .btn-primary { background: var(--primary); color: white; }
+        .btn-dark { background: #4b5563; color: white; }
+        .btn-success { background: var(--secondary); color: white; }
+        .btn-danger { background: var(--danger); color: white; }
+
+        .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+        .input-wrapper { position: relative; display: flex; align-items: center; width: 100%; }
+        .field input { width: 100%; padding: 12px; border-radius: 8px; border: 2px solid var(--border); background: var(--card); color: var(--text); font-size: 16px; }
+
+        .clear-btn { position: absolute; right: 10px; background: #9ca3af; color: white; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-top: 20px; }
+        .product-item { background: var(--bg); padding: 12px; border-radius: 12px; text-align: center; cursor: pointer; border: 1px solid var(--border); }
+
+        /* Seção Sobre o Sistema */
+        .about-section { margin-top: 40px; padding: 20px; background: rgba(79, 70, 229, 0.05); border-radius: 15px; border: 2px dashed var(--primary); }
+
+        .footer-credits { margin-top: 30px; text-align: center; font-size: 14px; padding-bottom: 20px; border-top: 1px solid var(--border); padding-top: 20px; }
+        .footer-credits a { color: var(--primary); text-decoration: none; font-weight: bold; margin: 0 10px; }
+
         #print-area { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 30px; }
         .label-card { border: 1px solid #000; padding: 10px; background: white; color: black; text-align: center; }
-        @media print { .app-container, .nav-menu { display: none !important; } }
+
+        @media print { .app-container, .nav-menu, #tutorial-panel { display: none !important; } }
     </style>
 </head>
 <body>
+
+<div id="tutorial-panel">
+    <h3 style="color:var(--primary); margin-top:0;">📖 Guia EtiqPRO</h3>
+    <div class="tut-item"><span>📷</span> <b>Scanner:</b> Lê o código via câmera.</div>
+    <div class="tut-item"><span>➕</span> <b>Gerar:</b> Cria a etiqueta na tela.</div>
+    <div class="tut-item"><span>🖨️</span> <b>Imprimir:</b> Gera o PDF para impressão.</div>
+    <div class="tut-item"><span>🗑️</span> <b>Limpar:</b> Apaga as etiquetas da tela.</div>
+    <button class="btn btn-primary" style="width:100%; margin-top:15px;" onclick="toggleTut()">Entendi</button>
+</div>
+
 <div class="app-container">
     <div class="nav-menu">
         <a href="index.html" class="nav-link active">🏷️ Etiquetas</a>
         <a href="estoque.html" class="nav-link">📦 Estoque Pro</a>
     </div>
 
+    <div class="header">
+        <h1 style="margin:0; font-size: 22px;">📦 EtiqPRO <span style="color:var(--primary)">v19.7</span></h1>
+        <div style="display:flex; gap:10px;">
+            <button class="btn btn-dark" onclick="toggleTut()">❓ Guia</button>
+            <button class="btn btn-dark" onclick="toggleTheme()">🌓</button>
+        </div>
+    </div>
+
+    <div id="scanner-view" style="display:none; border-radius:15px; overflow:hidden; margin-bottom:20px; border:3px solid var(--primary); background:#000;"></div>
+
     <div class="input-grid">
         <div class="field">
             <label>Código / EAN</label>
             <div class="input-wrapper">
-                <input id="code" placeholder="000000">
-                <button class="clear-btn" onclick="document.getElementById('code').value=''">✕</button>
-                <button class="btn btn-primary" style="margin-left:5px; padding: 10px;" onclick="toggleScanner()">📷</button>
+                <input id="code" placeholder="Código">
+                <button class="btn btn-dark" style="margin-left:5px;" onclick="toggleScanner()">📷</button>
             </div>
         </div>
         <div class="field">
             <label>Produto</label>
-            <input id="name" placeholder="Nome do item">
+            <div class="input-wrapper">
+                <input id="name" placeholder="Nome">
+                <button class="clear-btn" onclick="document.getElementById('name').value=''">✕</button>
+            </div>
+        </div>
+        <div class="field" style="max-width: 80px;">
+            <label>Qtd</label>
+            <input id="qty" type="number" value="1">
         </div>
     </div>
-    <button class="btn btn-primary" style="width:100%" onclick="addLabels()">➕ Gerar Etiquetas</button>
-    <div id="print-area"></div>
+
+    <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:10px;">
+        <button class="btn btn-primary" onclick="addLabels()">➕ Gerar</button>
+        <button class="btn btn-success" onclick="window.print()">🖨️ Imprimir</button>
+        <button class="btn btn-danger" onclick="clearArea()">🗑️ Limpar</button>
+    </div>
+
+    <div style="margin-top:25px;">
+        <h3 style="font-size:15px;">📂 Produtos Salvos</h3>
+        <div class="product-grid" id="db-list"></div>
+    </div>
+
+    <div class="about-section">
+        <h4 style="margin:0; color:var(--primary);">🚀 Sobre o Sistema</h4>
+        <p style="font-size: 0.85rem; line-height: 1.4;">Este sistema automatiza a identificação de mercadorias, melhorando a organização e agilizando a reposição. Em caso de dúvidas, entre em contato com o criador.</p>
+    </div>
+
+    <div class="footer-credits">
+        <p>Criado por: <b>Lucas Silva Sousa</b></p>
+        <a href="https://www.instagram.com/lucassilvasousa_48" target="_blank">📸 Instagram</a>
+        <a href="https://wa.me/5594992786664" target="_blank">💬 WhatsApp</a>
+    </div>
 </div>
 
+<div id="print-area"></div>
+
 <script>
-    let etiquetas = [];
-    function addLabels() {
-        const c = document.getElementById('code').value, n = document.getElementById('name').value;
-        if(!c || !n) return alert("Preencha tudo!");
-        etiquetas.push({ id: Date.now(), c, n });
-        render();
-    }
-    function render() {
-        const area = document.getElementById('print-area'); area.innerHTML = "";
-        etiquetas.forEach(e => {
-            const div = document.createElement('div'); div.className = 'label-card';
-            div.innerHTML = `<div>${e.n}</div><svg id="s${e.id}"></svg>`;
-            area.appendChild(div);
-            JsBarcode(`#s${e.id}`, e.c, { width: 1.5, height: 40, displayValue: true });
-        });
-    }
-    function toggleScanner() { /* Scanner Logic */ }
+let etiquetas = [];
+let banco = JSON.parse(localStorage.getItem('etiq_v19_db')) || {};
+
+function toggleTut() { const p = document.getElementById('tutorial-panel'); p.style.display = p.style.display === 'block' ? 'none' : 'block'; }
+function toggleTheme() { document.body.classList.toggle('dark-mode'); }
+
+function addLabels(customCode, customName) {
+    const c = customCode || document.getElementById('code').value.trim();
+    const n = customName || document.getElementById('name').value.trim();
+    const q = parseInt(document.getElementById('qty').value) || 1;
+    if(!c || !n) return alert("Preencha os campos!");
+    banco[c] = n;
+    localStorage.setItem('etiq_v19_db', JSON.stringify(banco));
+    for(let i=0; i<q; i++) { etiquetas.push({ id: Date.now() + i, c, n }); }
+    renderEtiquetas(); renderBanco();
+}
+
+function renderEtiquetas() {
+    const area = document.getElementById('print-area'); area.innerHTML = "";
+    etiquetas.forEach(e => {
+        const div = document.createElement('div'); div.className = 'label-card';
+        div.innerHTML = `<div style="font-weight:bold; font-size:11px; margin-bottom:5px;">${e.n}</div><svg id="s${e.id}"></svg>`;
+        area.appendChild(div);
+        JsBarcode(`#s${e.id}`, e.c, { format: "CODE128", width: 1.5, height: 40, displayValue: true });
+    });
+}
+
+function renderBanco() {
+    const list = document.getElementById('db-list'); list.innerHTML = "";
+    Object.keys(banco).reverse().forEach(code => {
+        const div = document.createElement('div'); div.className = 'product-item';
+        div.onclick = () => addLabels(code, banco[code]);
+        div.innerHTML = `<b>${banco[code]}</b><br><small>${code}</small>`;
+        list.appendChild(div);
+    });
+}
+
+function clearArea() { if(confirm("Limpar tela?")) { etiquetas = []; renderEtiquetas(); } }
+
+let scanner;
+async function toggleScanner() {
+    const v = document.getElementById('scanner-view');
+    if (v.style.display === 'block') { if(scanner) await scanner.stop(); v.style.display = 'none'; return; }
+    v.style.display = 'block';
+    if(!scanner) scanner = new Html5Qrcode("scanner-view");
+    scanner.start({ facingMode: "environment" }, { fps: 15, qrbox: {width: 250, height: 150} }, (txt) => {
+        document.getElementById('code').value = txt;
+        if(banco[txt]) document.getElementById('name').value = banco[txt];
+        scanner.stop(); v.style.display = 'none';
+    }).catch(() => { v.style.display = 'none'; });
+}
+renderBanco();
 </script>
 </body>
 </html>
