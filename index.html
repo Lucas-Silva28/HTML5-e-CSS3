@@ -1,209 +1,177 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EtiqPRO v17.0 - Som & Feedback</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EtiqPRO v18.0</title>
 
-<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
-<script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
 
-<style>
-:root {
-    --primary: #4f46e5;
-    --secondary: #10b981;
-    --danger: #ef4444;
-    --bg: #f3f4f6;
-    --card: #ffffff;
-    --text: #1f2937;
-    --border: #e5e7eb;
-}
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --text: #1f2937;
+            --border: #e5e7eb;
+        }
 
-body.dark-mode {
-    --bg: #111827;
-    --card: #1f2937;
-    --text: #f9fafb;
-    --border: #374151;
-}
+        body.dark-mode {
+            --bg: #111827;
+            --card: #1f2937;
+            --text: #f9fafb;
+            --border: #374151;
+        }
 
-body {
-    font-family: 'Inter', system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    margin: 0;
-    padding: 15px;
-    transition: 0.3s;
-}
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 15px;
+            transition: 0.3s;
+        }
 
-.app-container {
-    max-width: 900px;
-    margin: auto;
-    background: var(--card);
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
+        .app-container {
+            max-width: 900px;
+            margin: auto;
+            background: var(--card);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
 
-.btn {
-    padding: 12px 18px;
-    border: none;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: 0.2s;
-}
+        .btn {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
 
-.btn:active { transform: scale(0.96); }
-.btn-primary { background: var(--primary); color: white; }
-.btn-dark { background: #4b5563; color: white; }
-.btn-success { background: var(--secondary); color: white; }
-.btn-danger { background: var(--danger); color: white; }
+        .btn:active { transform: scale(0.96); }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-dark { background: #4b5563; color: white; }
+        .btn-success { background: var(--secondary); color: white; }
+        .btn-danger { background: var(--danger); color: white; }
 
-.input-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-bottom: 20px;
-}
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
 
-.field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
-.field input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 2px solid var(--border);
-    background: var(--card);
-    color: var(--text);
-    box-sizing: border-box;
-}
+        .field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+        .field input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            box-sizing: border-box;
+        }
 
-/* Ajuste do Scanner */
-#scanner-view {
-    border-radius: 15px;
-    overflow: hidden;
-    background: #000;
-}
+        #scanner-view {
+            border-radius: 15px;
+            overflow: hidden;
+            background: #000;
+            border: 3px solid var(--primary);
+        }
 
-#scanner-view video {
-    width: 100% !important;
-    object-fit: cover !important;
-}
+        #scanner-view video {
+            width: 100% !important;
+            object-fit: cover !important;
+        }
 
-/* Tutorial */
-.modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.8);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
 
-.modal-content {
-    background: var(--card);
-    padding: 30px;
-    border-radius: 20px;
-    max-width: 500px;
-    width: 90%;
-    max-height: 85vh;
-    overflow-y: auto;
-}
+        .product-item {
+            background: var(--bg);
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            border: 2px solid transparent;
+        }
 
-.step {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-    text-align: left;
-}
+        .product-item:hover { border-color: var(--primary); }
 
-.step-number {
-    background: var(--primary);
-    color: white;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-weight: bold;
-}
+        .footer-credits {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            font-size: 14px;
+        }
 
-/* Galeria */
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
-    margin-top: 20px;
-}
+        .footer-credits a { color: var(--primary); text-decoration: none; font-weight: bold; margin: 0 10px; }
 
-.product-item {
-    background: var(--bg);
-    padding: 12px;
-    border-radius: 12px;
-    text-align: center;
-    cursor: pointer;
-    border: 2px solid transparent;
-    position: relative;
-    transition: 0.2s;
-}
+        #print-area {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 10px;
+            margin-top: 30px;
+        }
 
-.product-item:hover { border-color: var(--primary); transform: translateY(-2px); }
+        .label-card {
+            border: 1px solid #000;
+            padding: 10px;
+            background: white;
+            color: black;
+            text-align: center;
+            position: relative;
+        }
 
-/* Rodapé */
-.footer-credits {
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-    text-align: center;
-    font-size: 14px;
-}
+        /* Modal Tutorial */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
 
-.footer-credits a {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: bold;
-    margin: 0 10px;
-}
+        .modal-content {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+        }
 
-/* Print Area */
-#print-area {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 10px;
-    margin-top: 30px;
-}
-
-.label-card {
-    border: 1px solid #000;
-    padding: 10px;
-    background: white;
-    color: black;
-    text-align: center;
-    position: relative;
-}
-
-@media print {
-    .app-container, .modal, .btn-del-label, .sound-assets { display: none !important; }
-    #print-area { grid-template-columns: repeat(3, 1fr); gap: 5mm; }
-    .label-card { page-break-inside: avoid; }
-}
-</style>
+        @media print {
+            .app-container, .modal, .btn-del-label { display: none !important; }
+            #print-area { grid-template-columns: repeat(3, 1fr); gap: 5mm; }
+        }
+    </style>
 </head>
 <body>
 
-<div class="sound-assets">
+<div class="sound-assets" style="display:none;">
     <audio id="snd-scan" src="https://assets.mixkit.co/sfx/preview/mixkit-barcodes-scanner-beep-1069.mp3"></audio>
     <audio id="snd-cam" src="https://assets.mixkit.co/sfx/preview/mixkit-camera-shutter-click-1133.mp3"></audio>
     <audio id="snd-add" src="https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-click-1112.mp3"></audio>
@@ -212,14 +180,14 @@ body {
 
 <div class="app-container">
     <div class="header">
-        <h1 style="margin:0; font-size: 24px;">📦 EtiqPRO <span style="color:var(--primary)">v17</span></h1>
+        <h1 style="margin:0; font-size: 24px;">📦 EtiqPRO <span style="color:var(--primary)">v18</span></h1>
         <div style="display:flex; gap:10px;">
             <button class="btn btn-dark" onclick="toggleTheme()">🌓</button>
             <button class="btn btn-primary" onclick="openGuide()">❓ Tutorial</button>
         </div>
     </div>
 
-    <div id="scanner-view" style="display:none; margin-bottom:20px; border: 3px solid var(--primary);"></div>
+    <div id="scanner-view" style="display:none; margin-bottom:20px;"></div>
 
     <div class="input-grid">
         <div class="field">
@@ -233,7 +201,7 @@ body {
             <label>Nome do Produto</label>
             <input id="name" placeholder="Descrição">
         </div>
-        <div class="field" style="max-width: 120px;">
+        <div class="field" style="max-width: 100px;">
             <label>Qtd</label>
             <input id="qty" type="number" value="1">
         </div>
@@ -262,56 +230,33 @@ body {
 <div class="modal" id="modal-tutorial">
     <div class="modal-content">
         <h2 style="margin-top:0">🚀 Guia de Uso</h2>
-        
-        <div class="step">
-            <div class="step-number">1</div>
-            <div><b>Cadastrar:</b> Digite o código e nome. Ao adicionar, ele fica salvo na sua galeria para sempre.</div>
-        </div>
-
-        <div class="step">
-            <div class="step-number">2</div>
-            <div><b>Usar Atalho:</b> Toque nos produtos da "Galeria" para gerar etiquetas sem digitar nada.</div>
-        </div>
-
-        <div class="step">
-            <div class="step-number">3</div>
-            <div><b>Scanner:</b> Use o ícone 📷 para ler códigos com a câmera. O sistema faz um "beep" ao ler.</div>
-        </div>
-
-        <div class="step">
-            <div class="step-number">4</div>
-            <div><b>Gerar PDF:</b> Use o botão de impressão para organizar as etiquetas em folha A4.</div>
-        </div>
-
-        <button class="btn btn-primary" style="width:100%; margin-top:10px;" onclick="closeGuide()">Entendi!</button>
+        <p>1. Digite o código ou use a câmera 📷.</p>
+        <p>2. Clique em "Gerar" para criar a etiqueta na tela.</p>
+        <p>3. Clique em "Imprimir" para gerar o PDF pronto para folha A4.</p>
+        <button class="btn btn-primary" style="width:100%" onclick="closeGuide()">Entendi!</button>
     </div>
 </div>
 
 <script>
 let etiquetas = [];
-let banco = JSON.parse(localStorage.getItem('etiq_v17_db')) || {};
+let banco = JSON.parse(localStorage.getItem('etiq_v18_db')) || {};
 
 function playSnd(id) {
     const audio = document.getElementById(id);
-    if(audio) {
-        audio.currentTime = 0;
-        audio.play().catch(() => {});
-    }
+    if(audio) { audio.currentTime = 0; audio.play().catch(() => {}); }
 }
 
 function toggleTheme() {
     document.body.classList.toggle('dark-mode');
-    localStorage.setItem('etiq_v17_theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+    localStorage.setItem('etiq_theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
 }
-if(localStorage.getItem('etiq_v17_theme') === 'dark') document.body.classList.add('dark-mode');
+if(localStorage.getItem('etiq_theme') === 'dark') document.body.classList.add('dark-mode');
 
 function openGuide() { document.getElementById('modal-tutorial').style.display = 'flex'; }
 function closeGuide() { document.getElementById('modal-tutorial').style.display = 'none'; }
 
 function searchDB(val) {
-    if(banco[val]) {
-        document.getElementById('name').value = banco[val];
-    }
+    if(banco[val]) document.getElementById('name').value = banco[val];
 }
 
 function addLabels() {
@@ -322,8 +267,7 @@ function addLabels() {
     if(!c || !n) return alert("Preencha Código e Nome!");
 
     banco[c] = n;
-    localStorage.setItem('etiq_v17_db', JSON.stringify(banco));
-    
+    localStorage.setItem('etiq_v18_db', JSON.stringify(banco));
     playSnd('snd-add');
 
     for(let i=0; i<q; i++) {
@@ -332,19 +276,6 @@ function addLabels() {
 
     renderEtiquetas();
     renderBanco();
-    
-    document.getElementById('code').value = "";
-    document.getElementById('name').value = "";
-    document.getElementById('code').focus();
-}
-
-function quickUse(c, n) {
-    playSnd('snd-add');
-    const q = parseInt(document.getElementById('qty').value) || 1;
-    for(let i=0; i<q; i++) {
-        etiquetas.push({ id: Date.now() + i, c, n });
-    }
-    renderEtiquetas();
 }
 
 function renderEtiquetas() {
@@ -354,12 +285,12 @@ function renderEtiquetas() {
         const div = document.createElement('div');
         div.className = 'label-card';
         div.innerHTML = `
-            <div style="font-weight:bold; font-size:11px; margin-bottom:5px; text-transform:uppercase;">${e.n}</div>
+            <div style="font-weight:bold; font-size:11px; margin-bottom:5px;">${e.n}</div>
             <svg id="s${e.id}"></svg>
-            <button class="btn-del-label" onclick="removeLabel(${e.id})" style="position:absolute; top:0; right:0; background:red; color:white; border:none; padding: 2px 8px; cursor:pointer;">X</button>
+            <button class="btn-del-label" onclick="removeLabel(${e.id})" style="position:absolute; top:0; right:0; background:red; color:white; border:none; padding:2px 5px;">X</button>
         `;
         area.appendChild(div);
-        JsBarcode(`#s${e.id}`, e.c, { format: "CODE128", width: 1.5, height: 45, displayValue: true, fontSize: 13 });
+        JsBarcode(`#s${e.id}`, e.c, { format: "CODE128", width: 1.5, height: 45, displayValue: true });
     });
 }
 
@@ -369,22 +300,10 @@ function renderBanco() {
     Object.keys(banco).reverse().forEach(code => {
         const div = document.createElement('div');
         div.className = 'product-item';
-        div.onclick = () => quickUse(code, banco[code]);
-        div.innerHTML = `
-            <b style="display:block; font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${banco[code]}</b>
-            <span style="font-size:10px; opacity:0.7;">${code}</span>
-            <button onclick="event.stopPropagation(); deleteDB('${code}')" style="position:absolute; top:2px; right:2px; border:none; background:none; color:red; cursor:pointer;">×</button>
-        `;
+        div.onclick = () => { document.getElementById('code').value = code; searchDB(code); playSnd('snd-add'); };
+        div.innerHTML = `<b>${banco[code]}</b><br><small>${code}</small>`;
         list.appendChild(div);
     });
-}
-
-function deleteDB(c) {
-    if(confirm("Remover este item do banco?")) {
-        delete banco[c];
-        localStorage.setItem('etiq_v17_db', JSON.stringify(banco));
-        renderBanco();
-    }
 }
 
 function removeLabel(id) {
@@ -393,364 +312,30 @@ function removeLabel(id) {
 }
 
 function clearArea() {
-    if(confirm("Limpar etiquetas da tela?")) {
-        playSnd('snd-clear');
-        etiquetas = []; 
-        renderEtiquetas(); 
-    }
+    if(confirm("Limpar tela?")) { playSnd('snd-clear'); etiquetas = []; renderEtiquetas(); }
 }
 
 let scanner;
 async function toggleScanner() {
     const v = document.getElementById('scanner-view');
-    
     if (v.style.display === 'block') {
         if(scanner) await scanner.stop();
         v.style.display = 'none';
         return;
     }
-    
     playSnd('snd-cam');
     v.style.display = 'block';
-    
-    if(!scanner) {
-        scanner = new Html5Qrcode("scanner-view");
-    }
-
-    const config = { fps: 10, qrbox: { width: 250, height: 150 } };
-
-    scanner.start(
-        { facingMode: "environment" }, 
-        config,
-        (txt) => {
-            playSnd('snd-scan');
-            document.getElementById('code').value = txt;
-            searchDB(txt);
-            scanner.stop();
-            v.style.display = 'none';
-        }
-    ).catch(err => {
-        alert("Erro: Verifique se deu permissão à câmera no cadeado do navegador.");
+    if(!scanner) scanner = new Html5Qrcode("scanner-view");
+    scanner.start({ facingMode: "environment" }, { fps: 10, qrbox: {width: 250, height: 150} }, (txt) => {
+        playSnd('snd-scan');
+        document.getElementById('code').value = txt;
+        searchDB(txt);
+        scanner.stop();
         v.style.display = 'none';
-    });
+    }).catch(() => { alert("Permita a câmera no cadeado do navegador!"); v.style.display = 'none'; });
 }
 
 renderBanco();
 </script>
-</body>
-</html>
-.btn-add{background:#2563eb;}
-.btn-scan{background:#0f172a;}
-.btn-print{background:#10b981;}
-.btn-export{background:#f59e0b;}
-.btn-clear{background:#ef4444;}
-
-#reader{display:none;width:100%;}
-
-#area-impressao {
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
-    gap:10px;
-    margin-top:15px;
-}
-
-.cartao-etiqueta {
-    border:1px dashed #ccc;
-    padding:10px;
-    text-align:center;
-    position:relative;
-}
-
-.btn-del {
-    position:absolute;
-    top:2px;
-    right:2px;
-    background:red;
-    color:#fff;
-    border:none;
-}
-
-/* MODAL */
-.modal {
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.6);
-    display:none;
-    justify-content:center;
-    align-items:center;
-}
-
-.modal-content {
-    background:#fff;
-    padding:20px;
-    border-radius:10px;
-    max-width:400px;
-    width:90%;
-}
-
-@media print{
-    .painel,.btn-del{display:none;}
-    #area-impressao{grid-template-columns:repeat(3,1fr);}
-}
-</style>
-</head>
-
-<body>
-
-<div class="painel">
-
-<div class="topo">
-<h2>EtiqPRO v8.0</h2>
-<button class="btn-tutorial" onclick="abrirTutorial()">❓ Tutorial</button>
-</div>
-
-<div id="reader"></div>
-
-<div class="grid-inputs">
-
-<div>
-<label>Código</label>
-<div style="display:flex;gap:5px;">
-<div class="input-box">
-<input id="codigo" oninput="toggleClear(this)">
-<button class="clear-btn" onclick="limparCampo('codigo')">✖</button>
-</div>
-<button class="btn btn-scan" onclick="iniciarCamera()">📷</button>
-</div>
-</div>
-
-<div>
-<label>Produto</label>
-<div class="input-box">
-<input id="nome" oninput="toggleClear(this)">
-<button class="clear-btn" onclick="limparCampo('nome')">✖</button>
-</div>
-</div>
-
-<div>
-<label>Preço</label>
-<div class="input-box">
-<input id="preco" type="number" oninput="toggleClear(this)">
-<button class="clear-btn" onclick="limparCampo('preco')">✖</button>
-</div>
-</div>
-
-<div>
-<label>Qtd</label>
-<div class="input-box">
-<input id="quantidade" type="number" value="1" oninput="toggleClear(this)">
-<button class="clear-btn" onclick="limparCampo('quantidade')">✖</button>
-</div>
-</div>
-
-</div>
-
-<div class="btn-row">
-<button class="btn btn-add" onclick="add()">Adicionar</button>
-<button class="btn btn-print" onclick="window.print()">Imprimir</button>
-<button class="btn btn-export" onclick="csv()">Exportar</button>
-<button class="btn btn-clear" onclick="limpar()">Limpar</button>
-</div>
-
-</div>
-
-<div id="area-impressao"></div>
-
-<!-- TUTORIAL -->
-<div class="modal" id="tutorial">
-<div class="modal-content">
-<h3>Como usar</h3>
-<p>📷 Escaneie o código com a câmera</p>
-<p>➕ Clique em Adicionar para gerar etiquetas</p>
-<p>🖨️ Use Imprimir para PDF ou impressão</p>
-<p>📊 Exportar gera planilha CSV</p>
-<p>🗑️ Limpar apaga tudo</p>
-<button onclick="fecharTutorial()">Fechar</button>
-</div>
-</div>
-
-<script>
-let db = JSON.parse(localStorage.getItem('db')) || [];
-let camera = null;
-
-/* X */
-function toggleClear(input){
-    const btn = input.nextElementSibling;
-    if(btn) btn.style.display = input.value ? 'block' : 'none';
-}
-
-function limparCampo(id){
-    const input = document.getElementById(id);
-    const btn = input.nextElementSibling;
-    input.value = '';
-    input.focus();
-    if(btn) btn.style.display = 'none';
-}
-
-/* TUTORIAL */
-function abrirTutorial(){ document.getElementById("tutorial").style.display="flex"; }
-function fecharTutorial(){ document.getElementById("tutorial").style.display="none"; }
-
-/* CAMERA */
-function iniciarCamera(){
-    const reader = document.getElementById("reader");
-
-    if(reader.style.display==="block"){
-        if(camera) camera.stop();
-        reader.style.display="none";
-        return;
-    }
-
-    reader.style.display="block";
-    camera = new Html5Qrcode("reader");
-
-    camera.start({ facingMode:"environment" }, { fps:10 }, (code)=>{
-        const input = document.getElementById("codigo");
-        input.value = code;
-        toggleClear(input);
-        camera.stop();
-        reader.style.display="none";
-    });
-}
-
-/* ADD */
-function add(){
-    const c = document.getElementById("codigo").value.trim();
-    const n = document.getElementById("nome").value.trim();
-    const p = document.getElementById("preco").value.trim();
-    const q = parseInt(document.getElementById("quantidade").value) || 1;
-
-    if(!c || !n){
-        alert("Preencha código e produto");
-        return;
-    }
-
-    for(let i=0;i<q;i++){
-        db.push({ id:Date.now()+i, c,n,p });
-    }
-
-    salvar();
-    render();
-
-    ["codigo","nome","preco","quantidade"].forEach(id=>{
-        const input = document.getElementById(id);
-        input.value = (id==="quantidade") ? 1 : "";
-        toggleClear(input);
-    });
-}
-
-function salvar(){ localStorage.setItem("db",JSON.stringify(db)); }
-
-function limpar(){
-    db=[];
-    salvar();
-    render();
-}
-
-function csv(){
-    let t="codigo,nome,preco\n";
-    db.forEach(i=>t+=`${i.c},${i.n},${i.p}\n`);
-    let a=document.createElement("a");
-    a.href="data:text/csv,"+t;
-    a.download="dados.csv";
-    a.click();
-}
-
-function del(id){
-    db=db.filter(i=>i.id!==id);
-    salvar();
-    render();
-}
-
-function render(){
-    const area=document.getElementById("area-impressao");
-    area.innerHTML="";
-
-    db.forEach(i=>{
-        let d=document.createElement("div");
-        d.className="cartao-etiqueta";
-        d.innerHTML=`
-        <button class="btn-del" onclick="del(${i.id})">x</button>
-        <div>${i.n}</div>
-        <svg id="b${i.id}"></svg>
-        <div>R$ ${i.p}</div>`;
-        area.appendChild(d);
-
-        JsBarcode(`#b${i.id}`, i.c);
-    });
-}
-
-render();
-</script>
-
-<!-- SEU CÓDIGO TODO AQUI -->
-
-<!-- SONS -->
-<audio id="somClick" src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3"></audio>
-<audio id="somOk" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3"></audio>
-<audio id="somErro" src="https://assets.mixkit.co/sfx/preview/mixkit-error-126627.mp3"></audio>
-<audio id="somDelete" src="https://assets.mixkit.co/sfx/preview/mixkit-trash-click-1104.mp3"></audio>
-<audio id="somScan" src="https://assets.mixkit.co/sfx/preview/mixkit-barcodes-scanner-beep-1069.mp3"></audio>
-
-<script>
-function tocarSom(id){
-    const som = document.getElementById(id);
-    if(!som) return;
-    som.currentTime = 0;
-    som.play().catch(()=>{});
-}
-
-document.querySelectorAll("button").forEach(btn=>{
-    btn.addEventListener("click", ()=> tocarSom("somClick"));
-});
-
-const _add = add;
-add = function(){
-    const codigo = document.getElementById("codigo").value.trim();
-    const nome = document.getElementById("nome").value.trim();
-
-    if(!codigo || !nome){
-        tocarSom("somErro");
-        alert("Preencha código e produto");
-        return;
-    }
-
-    _add();
-    tocarSom("somOk");
-}
-
-const _del = del;
-del = function(id){
-    _del(id);
-    tocarSom("somDelete");
-}
-
-const _limpar = limpar;
-limpar = function(){
-    _limpar();
-    tocarSom("somDelete");
-}
-
-const _csv = csv;
-csv = function(){
-    _csv();
-    tocarSom("somOk");
-}
-
-const originalStart = Html5Qrcode.prototype.start;
-Html5Qrcode.prototype.start = function(...args){
-    const successCallback = args[2];
-
-    args[2] = function(decodedText){
-        tocarSom("somScan");
-        successCallback(decodedText);
-    }
-
-    return originalStart.apply(this, args);
-}
-</script>
-
-</body>
-</html>
 </body>
 </html>
