@@ -25,7 +25,7 @@
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 20px; transition: 0.3s; }
         .container { max-width: 1000px; margin: auto; }
         
-        /* Estilo do Menu de Navegação Padronizado */
+        /* Menu de Navegação */
         .nav-menu {
             display: flex;
             gap: 10px;
@@ -104,18 +104,16 @@
 </div>
 
 <div id="tutorial-div">
-    <h3 style="color:var(--primary); margin-top:0;">📖 Como usar o Sistema</h3>
-    <p><b>1. Configurações:</b> Defina seu nome e o mercado.</p>
-    <p><b>2. Gramaturas:</b> Cadastre medidas (ex: 2L, 1kg).</p>
-    <p><b>3. Lançamento:</b> O sistema preenche a embalagem sozinho para produtos salvos.</p>
-    <button class="btn" style="background:var(--primary)" onclick="toggleTutorial()">Fechar Guia</button>
+    <h3 style="color:var(--primary); margin-top:0;">📖 Guia do Sistema</h3>
+    <p>⚠️ Se houver qualquer bug ou erro, informar ao desenvolvedor: <b>Lucas Silva</b>.</p>
+    <button class="btn" style="background:var(--primary)" onclick="toggleTutorial()">Fechar</button>
 </div>
 
 <div class="container">
     
     <div class="nav-menu">
         <a href="https://lucassilvasousa.github.io/EtiqPRO/" class="nav-link">🏷️ Etiquetas</a>
-        <a href="https://lucassilvasousa.github.io/EtiqPRO/NOME-DA-SUA-PASTA/" class="nav-link active">📦 Estoque Pro</a>
+        <a href="https://lucassilvasousa.github.io/EtiqPRO/marca_de_validade/" class="nav-link active">📦 Estoque Pro</a>
     </div>
 
     <header style="text-align: center; margin-bottom: 20px;">
@@ -124,7 +122,7 @@
     </header>
 
     <div class="card">
-        <h2 onclick="toggleDiv('config-div')" style="cursor:pointer">⚙️ Gerenciar Banco de Dados (Toque para abrir)</h2>
+        <h2 onclick="toggleDiv('config-div')" style="cursor:pointer">⚙️ Gerenciar Banco de Dados</h2>
         <div id="config-div" style="display:none;">
             <div class="grid">
                 <div class="input-box"><label>👤 Nome</label><div class="input-wrapper"><input type="text" id="user_name" oninput="salvarPerfil()"><button class="clear-btn" onclick="limpar('user_name')">✖</button></div></div>
