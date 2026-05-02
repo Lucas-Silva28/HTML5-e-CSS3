@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EtiqPRO v19.1</title>
+    <title>EtiqPRO v19.2</title>
 
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://unpkg.com/html5-qrcode"></script>
@@ -42,6 +42,33 @@
             padding: 25px;
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        /* Estilo do Menu de Navegação */
+        .nav-menu {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            font-size: 12px;
+            padding: 8px 14px;
+            background: var(--bg);
+            color: var(--text);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .nav-link.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
 
         .header {
@@ -92,7 +119,6 @@
             box-sizing: border-box;
         }
 
-        /* Ajuste específico para o campo com câmera para o X não subir nela */
         #code { padding-right: 85px; }
 
         .clear-btn {
@@ -113,9 +139,7 @@
             z-index: 5;
         }
 
-        /* Move o X do código mais para a esquerda para dar espaço à câmera */
         .clear-btn-code { right: 55px; }
-
         .clear-btn:hover { opacity: 1; background: var(--danger); }
 
         #scanner-view {
@@ -173,7 +197,7 @@
         }
 
         @media print {
-            .app-container, .btn-del-label, .clear-btn { display: none !important; }
+            .app-container, .btn-del-label, .clear-btn, .nav-menu { display: none !important; }
             #print-area { grid-template-columns: repeat(3, 1fr); gap: 5mm; }
         }
     </style>
@@ -188,8 +212,14 @@
 </div>
 
 <div class="app-container">
+    
+    <div class="nav-menu">
+        <a href="https://lucassilvasousa.github.io/EtiqPRO/" class="nav-link active">🏷️ Etiquetas</a>
+        <a href="https://lucassilvasousa.github.io/EtiqPRO/NOME-DA-SUA-PASTA/" class="nav-link">📦 Outro Projeto</a>
+    </div>
+
     <div class="header">
-        <h1 style="margin:0; font-size: 24px;">📦 EtiqPRO <span style="color:var(--primary)">v19.1</span></h1>
+        <h1 style="margin:0; font-size: 24px;">📦 EtiqPRO <span style="color:var(--primary)">v19.2</span></h1>
         <button class="btn btn-dark" onclick="toggleTheme()">🌓</button>
     </div>
 
