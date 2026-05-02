@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EtiqPRO v8.0</title>
+
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<style>
+:root {
+    --primary:#2563eb;
+    --secondary:#10b981;
+    --danger:#ef4444;
+    --warning:#f59e0b;
+    --dark:#0f172a;
+}
+
+body {
+    font-family:'Segoe UI';
+    background:linear-gradient(135deg,#3b82f6,#22c55e,#06b6d4);
+    background-size:300% 300%;
+    animation:bgMove 10s infinite;
+    margin:0;
+    padding:10px;
+}
+
+@keyframes bgMove {
+    0%{background-position:0%}
+    50%{background-position:100%}
+    100%{background-position:0%}
+}
+
+.painel {
+    max-width:1000px;
+    margin:auto;
+    background:#fff;
+    padding:15px;
+    border-radius:12px;
+}
+
+.topo {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.btn-tutorial {
+    background:#7c3aed;
+    color:#fff;
+    border:none;
+    padding:8px 12px;
+    border-radius:6px;
+    font-weight:bold;
+}
+
+.input-box { position:relative; }
+
+.input-box input {
+    width:100%;
+    padding:10px;
+    padding-right:30px;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+.clear-btn {
+    position:absolute;
+    right:8px;
+    top:50%;
+    transform:translateY(-50%);
+    border:none;
+    border-radius:50%;
+    width:18px;
+    height:18px;
+    background:#ef4444;
+    color:#fff;
+    font-size:11px;
+    cursor:pointer;
+    display:none;
+}
+
+.grid-inputs {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+@media(max-width:900px){
+    .grid-inputs{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:500px){
+    .grid-inputs{grid-template-columns:1fr;}
+}
+
+.btn-row {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+    gap:8px;
+    margin-top:10px;
+}
+
+.btn {
+    padding:10px;
+    border:none;
+    border-radius:6px;
+    color:#fff;
+    font-weight:bold;
+}
+
+.btn-add{background:#2563eb;}
+.btn-scan{background:#0f172a;}
+.btn-print{background:#10b981;}
+.btn-export{background:#f59e0b;}
+.btn-clear{background:#ef4444;}
+
+#reader{display:none;width:100%;}
+
+#area-impressao {
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+    gap:10px;
+    margin-top:15px;
+}
+
+.cartao-etiqueta {
+    border:1px dashed #ccc;
+    padding:10px;
+    text-align:center;
+    position:relative;
+}
+
+.btn-del {
+    position:absolute;
+    top:2px;
+    right:2px;
+    background:red;
+    color:#fff;
+    border:none;
+}
+
+/* MODAL */
+.modal {
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-content {
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+    max-width:400px;
+    width:90%;
+}
+
+@media print{
+    .painel,.btn-del{display:none;}
+    #area-impressao{grid-template-columns:repeat(3,1fr);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="painel">
+
+<div class="topo">
+<h2>EtiqPRO v8.0</h2>
+<button class="btn-tutorial" onclick="abrirTutorial()">❓ Tutorial</button>
+</div>
+
+<div id="reader"></div>
+
+<div class="grid-inputs">
+
+<div>
+<label>Código</label>
+<div style="display:flex;gap:5px;">
+<div class="input-box">
+<input id="codigo" oninput="toggleClear(this)">
+<button class="clear-btn" onclick="limparCampo('codigo')">✖</button>
+</div>
+<button class="btn btn-scan" onclick="iniciarCamera()">📷</button>
+</div>
+</div>
+
+<div>
+<label>Produto</label>
+<div class="input-box">
+<input id="nome" oninput="toggleClear(this)">
+<button class="clear-btn" onclick="limparCampo('nome')">✖</button>
+</div>
+</div>
+
+<div>
+<label>Preço</label>
+<div class="input-box">
+<input id="preco" type="number" oninput="toggleClear(this)">
+<button class="clear-btn" onclick="limparCampo('preco')">✖</button>
+</div>
+</div>
+
+<div>
+<label>Qtd</label>
+<div class="input-box">
+<input id="quantidade" type="number" value="1" oninput="toggleClear(this)">
+<button class="clear-btn" onclick="limparCampo('quantidade')">✖</button>
+</div>
+</div>
+
+</div>
+
+<div class="btn-row">
+<button class="btn btn-add" onclick="add()">Adicionar</button>
+<button class="btn btn-print" onclick="window.print()">Imprimir</button>
+<button class="btn btn-export" onclick="csv()">Exportar</button>
+<button class="btn btn-clear" onclick="limpar()">Limpar</button>
+</div>
+
+</div>
+
+<div id="area-impressao"></div>
+
+<!-- TUTORIAL -->
+<div class="modal" id="tutorial">
+<div class="modal-content">
+<h3>Como usar</h3>
+<p>📷 Escaneie o código com a câmera</p>
+<p>➕ Clique em Adicionar para gerar etiquetas</p>
+<p>🖨️ Use Imprimir para PDF ou impressão</p>
+<p>📊 Exportar gera planilha CSV</p>
+<p>🗑️ Limpar apaga tudo</p>
+<button onclick="fecharTutorial()">Fechar</button>
+</div>
+</div>
+
+<script>
+let db = JSON.parse(localStorage.getItem('db')) || [];
+let camera = null;
+
+/* X */
+function toggleClear(input){
+    const btn = input.nextElementSibling;
+    if(btn) btn.style.display = input.value ? 'block' : 'none';
+}
+
+function limparCampo(id){
+    const input = document.getElementById(id);
+    const btn = input.nextElementSibling;
+    input.value = '';
+    input.focus();
+    if(btn) btn.style.display = 'none';
+}
+
+/* TUTORIAL */
+function abrirTutorial(){ document.getElementById("tutorial").style.display="flex"; }
+function fecharTutorial(){ document.getElementById("tutorial").style.display="none"; }
+
+/* CAMERA */
+function iniciarCamera(){
+    const reader = document.getElementById("reader");
+
+    if(reader.style.display==="block"){
+        if(camera) camera.stop();
+        reader.style.display="none";
+        return;
+    }
+
+    reader.style.display="block";
+    camera = new Html5Qrcode("reader");
+
+    camera.start({ facingMode:"environment" }, { fps:10 }, (code)=>{
+        const input = document.getElementById("codigo");
+        input.value = code;
+        toggleClear(input);
+        camera.stop();
+        reader.style.display="none";
+    });
+}
+
+/* ADD */
+function add(){
+    const c = document.getElementById("codigo").value.trim();
+    const n = document.getElementById("nome").value.trim();
+    const p = document.getElementById("preco").value.trim();
+    const q = parseInt(document.getElementById("quantidade").value) || 1;
+
+    if(!c || !n){
+        alert("Preencha código e produto");
+        return;
+    }
+
+    for(let i=0;i<q;i++){
+        db.push({ id:Date.now()+i, c,n,p });
+    }
+
+    salvar();
+    render();
+
+    ["codigo","nome","preco","quantidade"].forEach(id=>{
+        const input = document.getElementById(id);
+        input.value = (id==="quantidade") ? 1 : "";
+        toggleClear(input);
+    });
+}
+
+function salvar(){ localStorage.setItem("db",JSON.stringify(db)); }
+
+function limpar(){
+    db=[];
+    salvar();
+    render();
+}
+
+function csv(){
+    let t="codigo,nome,preco\n";
+    db.forEach(i=>t+=`${i.c},${i.n},${i.p}\n`);
+    let a=document.createElement("a");
+    a.href="data:text/csv,"+t;
+    a.download="dados.csv";
+    a.click();
+}
+
+function del(id){
+    db=db.filter(i=>i.id!==id);
+    salvar();
+    render();
+}
+
+function render(){
+    const area=document.getElementById("area-impressao");
+    area.innerHTML="";
+
+    db.forEach(i=>{
+        let d=document.createElement("div");
+        d.className="cartao-etiqueta";
+        d.innerHTML=`
+        <button class="btn-del" onclick="del(${i.id})">x</button>
+        <div>${i.n}</div>
+        <svg id="b${i.id}"></svg>
+        <div>R$ ${i.p}</div>`;
+        area.appendChild(d);
+
+        JsBarcode(`#b${i.id}`, i.c);
+    });
+}
+
+render();
+</script>
+
+<!-- SEU CÓDIGO TODO AQUI -->
+
+<!-- SONS -->
+<audio id="somClick" src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3"></audio>
+<audio id="somOk" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3"></audio>
+<audio id="somErro" src="https://assets.mixkit.co/sfx/preview/mixkit-error-126627.mp3"></audio>
+<audio id="somDelete" src="https://assets.mixkit.co/sfx/preview/mixkit-trash-click-1104.mp3"></audio>
+<audio id="somScan" src="https://assets.mixkit.co/sfx/preview/mixkit-barcodes-scanner-beep-1069.mp3"></audio>
+
+<script>
+function tocarSom(id){
+    const som = document.getElementById(id);
+    if(!som) return;
+    som.currentTime = 0;
+    som.play().catch(()=>{});
+}
+
+document.querySelectorAll("button").forEach(btn=>{
+    btn.addEventListener("click", ()=> tocarSom("somClick"));
+});
+
+const _add = add;
+add = function(){
+    const codigo = document.getElementById("codigo").value.trim();
+    const nome = document.getElementById("nome").value.trim();
+
+    if(!codigo || !nome){
+        tocarSom("somErro");
+        alert("Preencha código e produto");
+        return;
+    }
+
+    _add();
+    tocarSom("somOk");
+}
+
+const _del = del;
+del = function(id){
+    _del(id);
+    tocarSom("somDelete");
+}
+
+const _limpar = limpar;
+limpar = function(){
+    _limpar();
+    tocarSom("somDelete");
+}
+
+const _csv = csv;
+csv = function(){
+    _csv();
+    tocarSom("somOk");
+}
+
+const originalStart = Html5Qrcode.prototype.start;
+Html5Qrcode.prototype.start = function(...args){
+    const successCallback = args[2];
+
+    args[2] = function(decodedText){
+        tocarSom("somScan");
+        successCallback(decodedText);
+    }
+
+    return originalStart.apply(this, args);
+}
+</script>
+
+</body>
+</html>
+</body>
+</html>
