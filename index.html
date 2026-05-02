@@ -44,7 +44,7 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
-        /* Estilo do Menu de Navegação */
+        /* Menu de Navegação */
         .nav-menu {
             display: flex;
             gap: 10px;
@@ -140,16 +140,14 @@
         }
 
         .clear-btn-code { right: 55px; }
-        .clear-btn:hover { opacity: 1; background: var(--danger); }
 
         #scanner-view {
             border-radius: 15px;
             overflow: hidden;
             background: #000;
             border: 3px solid var(--primary);
+            margin-bottom: 20px;
         }
-
-        #scanner-view video { width: 100% !important; object-fit: cover !important; }
 
         .product-grid {
             display: grid;
@@ -168,7 +166,6 @@
             border: 2px solid transparent;
             transition: 0.2s;
         }
-        .product-item:hover { border-color: var(--primary); }
 
         .footer-credits {
             margin-top: 40px;
@@ -215,7 +212,7 @@
     
     <div class="nav-menu">
         <a href="https://lucassilvasousa.github.io/EtiqPRO/" class="nav-link active">🏷️ Etiquetas</a>
-        <a href="https://lucassilvasousa.github.io/EtiqPRO/NOME-DA-SUA-PASTA/" class="nav-link">📦 Outro Projeto</a>
+        <a href="https://lucassilvasousa.github.io/EtiqPRO/marca_de_validade/" class="nav-link">📦 Estoque Pro</a>
     </div>
 
     <div class="header">
@@ -223,7 +220,7 @@
         <button class="btn btn-dark" onclick="toggleTheme()">🌓</button>
     </div>
 
-    <div id="scanner-view" style="display:none; margin-bottom:20px;"></div>
+    <div id="scanner-view" style="display:none;"></div>
 
     <div class="input-grid">
         <div class="field">
@@ -286,9 +283,7 @@ function clearField(id) {
 
 function toggleTheme() {
     document.body.classList.toggle('dark-mode');
-    localStorage.setItem('etiq_theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
 }
-if(localStorage.getItem('etiq_theme') === 'dark') document.body.classList.add('dark-mode');
 
 function addLabels(customCode, customName) {
     const c = customCode || document.getElementById('code').value.trim();
