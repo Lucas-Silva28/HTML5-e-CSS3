@@ -25,6 +25,33 @@
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 20px; transition: 0.3s; }
         .container { max-width: 1000px; margin: auto; }
         
+        /* Estilo do Menu de Navegação Padronizado */
+        .nav-menu {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            font-size: 12px;
+            padding: 8px 14px;
+            background: var(--bg-card);
+            color: var(--text-main);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .nav-link.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
         /* Botões de Topo */
         .top-buttons { position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 1000; }
         .btn-top { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
@@ -32,7 +59,6 @@
         .card { background: var(--bg-card); padding: 20px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid var(--border); }
         h2 { margin-top: 0; color: var(--primary); font-size: 1.2rem; }
 
-        /* Tutorial Modal */
         #tutorial-div { 
             display: none; position: fixed; top: 70px; right: 20px; width: 300px; 
             max-height: 80vh; overflow-y: auto; background: var(--bg-card); 
@@ -55,12 +81,19 @@
         th { background: rgba(0,0,0,0.05); padding: 8px; text-align: left; font-size: 0.7rem; color: var(--text-sub); }
         td { padding: 8px; border-bottom: 1px solid var(--border); font-size: 0.8rem; color: var(--table-text); }
 
+        .status-badge { padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: bold; color: white; }
+        .bom { background: #10b981; }
+        .alerta { background: #f59e0b; }
+        .critico { background: #ef4444; }
+
         .tag-container { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
         .tag { background: var(--primary); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; display: flex; align-items: center; gap: 5px; }
         .tag span { cursor: pointer; font-weight: bold; }
         
         .signature { text-align: center; margin-top: 40px; padding: 20px; border-top: 1px solid var(--border); }
         .signature a { color: var(--primary); text-decoration: none; font-weight: bold; margin: 0 10px; }
+
+        @media print { .nav-menu, .top-buttons, .card:not(.lista-card), .btn, .clear-btn { display: none !important; } }
     </style>
 </head>
 <body data-theme="light">
@@ -72,24 +105,26 @@
 
 <div id="tutorial-div">
     <h3 style="color:var(--primary); margin-top:0;">📖 Como usar o Sistema</h3>
-    <p><b>1. Configurações:</b> Defina seu nome e o mercado. Isso será usado nos relatórios.</p>
-    <p><b>2. Gramaturas:</b> Cadastre medidas (ex: 2L, 1kg) uma única vez. Use o "X" para apagar medidas que não quer mais.</p>
-    <p><b>3. Banco de Dados:</b> Cadastre seus produtos associando-os às gramaturas. Eles ficam salvos permanentemente no seu navegador.</p>
-    <p><b>4. Lançamento:</b> Ao digitar o nome de um produto salvo, o sistema preenche a embalagem sozinho. Adicione a quantidade e a validade.</p>
-    <p><b>5. Exportação:</b> Gere PDF, Excel ou copie o texto formatado para o WhatsApp com um clique.</p>
-    <hr>
-    <p style="font-size:0.75rem; color:var(--text-sub);">⚠️ Se houver qualquer bug ou erro, favor informar ao desenvolvedor: <b>Lucas Silva</b>.</p>
+    <p><b>1. Configurações:</b> Defina seu nome e o mercado.</p>
+    <p><b>2. Gramaturas:</b> Cadastre medidas (ex: 2L, 1kg).</p>
+    <p><b>3. Lançamento:</b> O sistema preenche a embalagem sozinho para produtos salvos.</p>
     <button class="btn" style="background:var(--primary)" onclick="toggleTutorial()">Fechar Guia</button>
 </div>
 
 <div class="container">
+    
+    <div class="nav-menu">
+        <a href="https://lucassilvasousa.github.io/EtiqPRO/" class="nav-link">🏷️ Etiquetas</a>
+        <a href="https://lucassilvasousa.github.io/EtiqPRO/NOME-DA-SUA-PASTA/" class="nav-link active">📦 Estoque Pro</a>
+    </div>
+
     <header style="text-align: center; margin-bottom: 20px;">
         <h1 style="margin:0; color: var(--primary);">Estoque Pro Master</h1>
         <p id="display-welcome" style="font-weight: bold;"></p>
     </header>
 
     <div class="card">
-        <h2 onclick="toggleDiv('config-div')" style="cursor:pointer">⚙️ Gerenciar Banco de Dados</h2>
+        <h2 onclick="toggleDiv('config-div')" style="cursor:pointer">⚙️ Gerenciar Banco de Dados (Toque para abrir)</h2>
         <div id="config-div" style="display:none;">
             <div class="grid">
                 <div class="input-box"><label>👤 Nome</label><div class="input-wrapper"><input type="text" id="user_name" oninput="salvarPerfil()"><button class="clear-btn" onclick="limpar('user_name')">✖</button></div></div>
@@ -122,7 +157,7 @@
         <h2>📝 Lançamento de Estoque</h2>
         <div class="grid">
             <div class="input-box"><label>Produto</label><div class="input-wrapper"><input type="text" id="p_n" list="sugestoes" oninput="autoFill()"><button class="clear-btn" onclick="limpar('p_n')">✖</button></div><datalist id="sugestoes"></datalist></div>
-            <div class="input-box"><label>Embalagem</label><input type="text" id="p_e" readonly style="background:#e2e8f0;"></div>
+            <div class="input-box"><label>Embalagem</label><input type="text" id="p_e" readonly style="background:rgba(0,0,0,0.05);"></div>
             <div class="input-box"><label>Qtd</label><div class="input-wrapper"><input type="number" id="p_q"><button class="clear-btn" onclick="limpar('p_q')">✖</button></div></div>
             <div class="input-box"><label>Vencimento</label><input type="date" id="p_d"></div>
         </div>
@@ -167,8 +202,8 @@
     }
 
     function salvarPerfil() {
-        PERFIL.user = document.getElementById('user_name').value;
-        PERFIL.market = document.getElementById('market_name').value;
+        PERFIL.user = document.getElementById('user_name').value || "Lucas";
+        PERFIL.market = document.getElementById('market_name').value || "Assaí";
         localStorage.setItem('db_final_perfil', JSON.stringify(PERFIL));
         document.getElementById('display-welcome').innerText = `Bem-vindo, ${PERFIL.user}!`;
     }
@@ -239,7 +274,7 @@
     function pdf() {
         const { jsPDF } = window.jspdf; const doc = new jsPDF();
         doc.text(`Estoque: ${PERFIL.market}`, 14, 15);
-        doc.autoTable({ head: [['Produto', 'Emb', 'Qtd', 'Data', 'Status']], body: LISTA.map(p => [p.n, p.e, p.q, p.d.split('-').reverse().join('/'), p.s.l]), startY: 25, didParseCell: (data) => { if(data.column.index === 4 && data.section === 'body') { data.cell.styles.fillColor = LISTA[data.row.index].s.rgb; data.cell.styles.textColor = [255,255,255]; } } });
+        doc.autoTable({ head: [['Produto', 'Emb', 'Qtd', 'Data', 'Status']], body: LISTA.map(p => [p.n, p.e, p.q, p.d.split('-').reverse().join('/'), p.s.l]), startY: 25 });
         doc.save(`estoque.pdf`);
     }
 
