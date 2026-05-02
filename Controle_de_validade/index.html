@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque Pro Master - Lucas Silva</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #6366f1; --bg-body: #f1f5f9; --bg-card: #ffffff;
+            --text-main: #1e293b; --text-sub: #64748b; --border: #e2e8f0;
+            --input-bg: #ffffff; --table-text: #1e293b;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #0f172a; --bg-card: #1e293b; --text-main: #f1f5f9;
+            --text-sub: #94a3b8; --border: #334155; --input-bg: #0f172a;
+            --table-text: #f1f5f9;
+        }
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 20px; transition: 0.3s; }
+        .container { max-width: 1000px; margin: auto; }
+        
+        /* Botões de Topo */
+        .top-buttons { position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 1000; }
+        .btn-top { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        
+        .card { background: var(--bg-card); padding: 20px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid var(--border); }
+        h2 { margin-top: 0; color: var(--primary); font-size: 1.2rem; }
+
+        /* Tutorial Modal */
+        #tutorial-div { 
+            display: none; position: fixed; top: 70px; right: 20px; width: 300px; 
+            max-height: 80vh; overflow-y: auto; background: var(--bg-card); 
+            border: 2px solid var(--primary); border-radius: 15px; padding: 15px; 
+            z-index: 1001; box-shadow: 0 10px 30px rgba(0,0,0,0.3); font-size: 0.85rem;
+        }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 12px; }
+        .input-wrapper { position: relative; display: flex; align-items: center; }
+        .input-wrapper input, .input-wrapper select { width: 100%; padding-right: 30px; }
+        .clear-btn { position: absolute; right: 8px; cursor: pointer; color: #ef4444; font-weight: bold; background: none; border: none; }
+
+        .input-box { display: flex; flex-direction: column; gap: 4px; }
+        label { font-weight: 700; font-size: 0.65rem; text-transform: uppercase; color: var(--text-sub); }
+        input, select { padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--input-bg); color: var(--text-main); font-size: 0.85rem; }
+        
+        .btn { padding: 10px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; color: white; width: 100%; font-size: 0.85rem; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { background: rgba(0,0,0,0.05); padding: 8px; text-align: left; font-size: 0.7rem; color: var(--text-sub); }
+        td { padding: 8px; border-bottom: 1px solid var(--border); font-size: 0.8rem; color: var(--table-text); }
+
+        .tag-container { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+        .tag { background: var(--primary); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; display: flex; align-items: center; gap: 5px; }
+        .tag span { cursor: pointer; font-weight: bold; }
+        
+        .signature { text-align: center; margin-top: 40px; padding: 20px; border-top: 1px solid var(--border); }
+        .signature a { color: var(--primary); text-decoration: none; font-weight: bold; margin: 0 10px; }
+    </style>
+</head>
+<body data-theme="light">
+
+<div class="top-buttons">
+    <button class="btn-top" onclick="toggleTutorial()">❓ Guia</button>
+    <button class="btn-top" onclick="toggleTheme()"><span id="theme-icon">🌙</span></button>
+</div>
+
+<div id="tutorial-div">
+    <h3 style="color:var(--primary); margin-top:0;">📖 Como usar o Sistema</h3>
+    <p><b>1. Configurações:</b> Defina seu nome e o mercado. Isso será usado nos relatórios.</p>
+    <p><b>2. Gramaturas:</b> Cadastre medidas (ex: 2L, 1kg) uma única vez. Use o "X" para apagar medidas que não quer mais.</p>
+    <p><b>3. Banco de Dados:</b> Cadastre seus produtos associando-os às gramaturas. Eles ficam salvos permanentemente no seu navegador.</p>
+    <p><b>4. Lançamento:</b> Ao digitar o nome de um produto salvo, o sistema preenche a embalagem sozinho. Adicione a quantidade e a validade.</p>
+    <p><b>5. Exportação:</b> Gere PDF, Excel ou copie o texto formatado para o WhatsApp com um clique.</p>
+    <hr>
+    <p style="font-size:0.75rem; color:var(--text-sub);">⚠️ Se houver qualquer bug ou erro, favor informar ao desenvolvedor: <b>Lucas Silva</b>.</p>
+    <button class="btn" style="background:var(--primary)" onclick="toggleTutorial()">Fechar Guia</button>
+</div>
+
+<div class="container">
+    <header style="text-align: center; margin-bottom: 20px;">
+        <h1 style="margin:0; color: var(--primary);">Estoque Pro Master</h1>
+        <p id="display-welcome" style="font-weight: bold;"></p>
+    </header>
+
+    <div class="card">
+        <h2 onclick="toggleDiv('config-div')" style="cursor:pointer">⚙️ Gerenciar Banco de Dados</h2>
+        <div id="config-div" style="display:none;">
+            <div class="grid">
+                <div class="input-box"><label>👤 Nome</label><div class="input-wrapper"><input type="text" id="user_name" oninput="salvarPerfil()"><button class="clear-btn" onclick="limpar('user_name')">✖</button></div></div>
+                <div class="input-box"><label>🛒 Mercado</label><div class="input-wrapper"><input type="text" id="market_name" oninput="salvarPerfil()"><button class="clear-btn" onclick="limpar('market_name')">✖</button></div></div>
+            </div>
+
+            <p style="font-size: 0.7rem; font-weight: bold; color: var(--primary); margin-top:15px;">GERENCIAR GRAMATURAS:</p>
+            <div class="grid" style="grid-template-columns: 2fr 1fr;">
+                <div class="input-wrapper"><input type="text" id="new_gram" placeholder="Ex: 2L, 1kg"><button class="clear-btn" onclick="limpar('new_gram')">✖</button></div>
+                <button class="btn" style="background:#6366f1" onclick="addGram()">➕ Salvar Medida</button>
+            </div>
+            <div id="gram-tags" class="tag-container"></div>
+
+            <p style="font-size: 0.7rem; font-weight: bold; color: var(--primary); margin-top:15px;">CADASTRAR PRODUTO NO BANCO:</p>
+            <div class="grid">
+                <div class="input-box"><label>Produto</label><div class="input-wrapper"><input type="text" id="cfg_n"><button class="clear-btn" onclick="limpar('cfg_n')">✖</button></div></div>
+                <div class="input-box"><label>Medida</label><select id="cfg_v_select"></select></div>
+                <div class="input-box"><label>Tipo</label><select id="cfg_t"><option value="Fardo">Fardo</option><option value="Cx">Cx</option><option value="Unid">Unid</option></select></div>
+                <div class="input-box"><label>Qtd Itens</label><div class="input-wrapper"><input type="number" id="cfg_u"><button class="clear-btn" onclick="limpar('cfg_u')">✖</button></div></div>
+            </div>
+            <button class="btn" style="background:#10b981;" onclick="salvarProduto()">💾 Salvar no Banco Permanente</button>
+            
+            <div style="max-height:150px; overflow-y:auto; margin-top:10px;">
+                <table><tbody id="lista-banco-corpo"></tbody></table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>📝 Lançamento de Estoque</h2>
+        <div class="grid">
+            <div class="input-box"><label>Produto</label><div class="input-wrapper"><input type="text" id="p_n" list="sugestoes" oninput="autoFill()"><button class="clear-btn" onclick="limpar('p_n')">✖</button></div><datalist id="sugestoes"></datalist></div>
+            <div class="input-box"><label>Embalagem</label><input type="text" id="p_e" readonly style="background:#e2e8f0;"></div>
+            <div class="input-box"><label>Qtd</label><div class="input-wrapper"><input type="number" id="p_q"><button class="clear-btn" onclick="limpar('p_q')">✖</button></div></div>
+            <div class="input-box"><label>Vencimento</label><input type="date" id="p_d"></div>
+        </div>
+        <button class="btn" style="background:var(--primary);" onclick="adicionar()">➕ Adicionar à Lista</button>
+        <div style="overflow-x: auto;">
+            <table>
+                <thead><tr><th>Produto</th><th>Emb</th><th>Qtd</th><th>Data</th><th>Status</th><th></th></tr></thead>
+                <tbody id="tabela-corpo"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="grid" style="grid-template-columns: 1fr 1fr 1fr;">
+            <button class="btn" style="background:#ef4444" onclick="pdf()">📄 PDF</button>
+            <button class="btn" style="background:#22c55e" onclick="excel()">📊 EXCEL</button>
+            <button class="btn" style="background:#25D366" onclick="copiar()">📋 WHATSAPP</button>
+        </div>
+    </div>
+
+    <footer class="signature">
+        <p>Desenvolvido por <strong>Lucas Silva</strong></p>
+        <a href="https://www.instagram.com/lucassilvasousa_48" target="_blank">📸 Instagram</a>
+        <a href="https://wa.me/5594992786664" target="_blank">💬 WhatsApp</a>
+    </footer>
+</div>
+
+<script>
+    let BANCO = JSON.parse(localStorage.getItem('db_final_banco')) || [];
+    let GRAMS = JSON.parse(localStorage.getItem('db_final_grams')) || ["350ml", "1L", "2L"];
+    let PERFIL = JSON.parse(localStorage.getItem('db_final_perfil')) || { user: "Lucas", market: "Assaí" };
+    let LISTA = [];
+
+    function toggleTutorial() { const d = document.getElementById('tutorial-div'); d.style.display = d.style.display === 'block' ? 'none' : 'block'; }
+    function limpar(id) { document.getElementById(id).value = ""; }
+    function toggleDiv(id) { const x = document.getElementById(id); x.style.display = x.style.display === 'none' ? 'block' : 'none'; }
+    
+    function toggleTheme() {
+        const b = document.body; const isL = b.getAttribute('data-theme') === 'light';
+        b.setAttribute('data-theme', isL ? 'dark' : 'light');
+        document.getElementById('theme-icon').innerText = isL ? "☀️" : "🌙";
+    }
+
+    function salvarPerfil() {
+        PERFIL.user = document.getElementById('user_name').value;
+        PERFIL.market = document.getElementById('market_name').value;
+        localStorage.setItem('db_final_perfil', JSON.stringify(PERFIL));
+        document.getElementById('display-welcome').innerText = `Bem-vindo, ${PERFIL.user}!`;
+    }
+
+    function addGram() {
+        const g = document.getElementById('new_gram').value.trim();
+        if(g && !GRAMS.includes(g)) {
+            GRAMS.push(g);
+            localStorage.setItem('db_final_grams', JSON.stringify(GRAMS));
+            renderGrams();
+            limpar('new_gram');
+        }
+    }
+
+    function removeGram(i) {
+        if(confirm("Apagar medida?")) { GRAMS.splice(i, 1); localStorage.setItem('db_final_grams', JSON.stringify(GRAMS)); renderGrams(); }
+    }
+
+    function renderGrams() {
+        document.getElementById('cfg_v_select').innerHTML = GRAMS.map(g => `<option value="${g}">${g}</option>`).join('');
+        document.getElementById('gram-tags').innerHTML = GRAMS.map((g, i) => `<div class="tag">${g} <span onclick="removeGram(${i})">×</span></div>`).join('');
+    }
+
+    function salvarProduto() {
+        const n = document.getElementById('cfg_n').value, v = document.getElementById('cfg_v_select').value, t = document.getElementById('cfg_t').value, u = document.getElementById('cfg_u').value;
+        if(!n || !u) return alert("Preencha Nome e Qtd!");
+        BANCO.push({n, v, t, u});
+        localStorage.setItem('db_final_banco', JSON.stringify(BANCO));
+        renderBanco();
+        limpar('cfg_n'); limpar('cfg_u');
+    }
+
+    function renderBanco() {
+        document.getElementById('sugestoes').innerHTML = BANCO.map(b => `<option value="${b.n}">`).join('');
+        document.getElementById('lista-banco-corpo').innerHTML = BANCO.map((b, i) => `<tr><td>${b.n}</td><td>${b.v} (${b.t} c/${b.u})</td><td><button onclick="apagarProd(${i})" style="border:none;background:none;cursor:pointer">🗑️</button></td></tr>`).join('');
+    }
+
+    function apagarProd(i) { if(confirm("Apagar produto?")) { BANCO.splice(i, 1); localStorage.setItem('db_final_banco', JSON.stringify(BANCO)); renderBanco(); } }
+
+    function autoFill() {
+        const p = BANCO.find(x => x.n === document.getElementById('p_n').value);
+        if(p) document.getElementById('p_e').value = `${p.v} (${p.t} c/ ${p.u})`;
+    }
+
+    function adicionar() {
+        const n = document.getElementById('p_n').value, e = document.getElementById('p_e').value, q = document.getElementById('p_q').value, d = document.getElementById('p_d').value;
+        if(!n || !d) return;
+        const diff = Math.ceil((new Date(d) - new Date()) / 86400000);
+        let s = { l: "ÓTIMO", c: "bom", rgb: [16, 185, 129] };
+        if(diff <= 10) s = { l: "CRÍTICO", c: "critico", rgb: [239, 68, 68] };
+        else if(diff <= 20) s = { l: "ALERTA", c: "alerta", rgb: [245, 158, 11] };
+        LISTA.push({n, e, q, d, s});
+        renderLista();
+        limpar('p_n'); limpar('p_q');
+    }
+
+    function renderLista() {
+        document.getElementById('tabela-corpo').innerHTML = LISTA.map((it, i) => `<tr><td><b>${it.n}</b></td><td>${it.e}</td><td>${it.q}</td><td>${it.d.split('-').reverse().join('/')}</td><td><span class="status-badge ${it.s.c}">${it.s.l}</span></td><td><button onclick="LISTA.splice(${i},1);renderLista()" style="border:none;background:none;cursor:pointer;color:red">✖</button></td></tr>`).join('');
+    }
+
+    function copiar() {
+        let t = `📅 *RELATÓRIO DE ESTOQUE ${PERFIL.market.toUpperCase()}*\n--------------------------\n\n`;
+        LISTA.forEach(p => { t += `✅ *PRODUTO:* ${p.n.toUpperCase()}\n📦 *EMB:* ${p.e}\n🔢 *QTD:* ${p.q}\n📅 *VENC:* ${p.d.split('-').reverse().join('/')}\n\n`; });
+        navigator.clipboard.writeText(t + "--------------------------");
+        alert("Copiado!");
+    }
+
+    function pdf() {
+        const { jsPDF } = window.jspdf; const doc = new jsPDF();
+        doc.text(`Estoque: ${PERFIL.market}`, 14, 15);
+        doc.autoTable({ head: [['Produto', 'Emb', 'Qtd', 'Data', 'Status']], body: LISTA.map(p => [p.n, p.e, p.q, p.d.split('-').reverse().join('/'), p.s.l]), startY: 25, didParseCell: (data) => { if(data.column.index === 4 && data.section === 'body') { data.cell.styles.fillColor = LISTA[data.row.index].s.rgb; data.cell.styles.textColor = [255,255,255]; } } });
+        doc.save(`estoque.pdf`);
+    }
+
+    function excel() {
+        const ws = XLSX.utils.json_to_sheet(LISTA.map(i => ({ Produto: i.n, Emb: i.e, Qtd: i.q, Data: i.d, Status: i.s.l })));
+        const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Estoque");
+        XLSX.writeFile(wb, "estoque.xlsx");
+    }
+
+    document.getElementById('user_name').value = PERFIL.user;
+    document.getElementById('market_name').value = PERFIL.market;
+    renderGrams(); renderBanco(); salvarPerfil();
+</script>
+</body>
+</html>
