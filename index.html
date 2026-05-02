@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EtiqPRO v19.7 - Lucas Silva</title>
+    <title>EtiqPRO v19.3 - Lucas Silva</title>
 
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script src="https://unpkg.com/html5-qrcode"></script>
@@ -21,21 +21,23 @@
         body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; transition: 0.3s; }
         .app-container { max-width: 900px; margin: auto; background: var(--card); padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
 
-        /* Menu de Navegação - Conectando os arquivos na raiz */
+        /* Menu de Navegação */
         .nav-menu { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
         .nav-link { text-decoration: none; font-size: 12px; padding: 8px 14px; background: var(--bg); color: var(--text); border-radius: 8px; border: 1px solid var(--border); font-weight: bold; transition: 0.2s; }
         .nav-link.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        /* Tutorial Lateral */
+        /* Tutorial Modal */
         #tutorial-panel { 
-            display: none; position: fixed; top: 0; right: 0; width: 300px; height: 100%; 
+            display: none; position: fixed; top: 0; right: 0; width: 320px; height: 100%; 
             background: var(--card); box-shadow: -5px 0 20px rgba(0,0,0,0.2); z-index: 2000; 
-            padding: 25px; overflow-y: auto; border-left: 4px solid var(--primary);
+            padding: 25px; overflow-y: auto; border-left: 3px solid var(--primary);
         }
-        .tut-item { margin-bottom: 15px; font-size: 0.9rem; line-height: 1.4; display: flex; align-items: center; gap: 10px; }
+        .tut-item { margin-bottom: 15px; font-size: 0.9rem; line-height: 1.4; }
+        .tut-icon { font-size: 1.2rem; margin-right: 8px; }
 
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .btn { padding: 12px 18px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
+        .btn:active { transform: scale(0.96); }
         .btn-primary { background: var(--primary); color: white; }
         .btn-dark { background: #4b5563; color: white; }
         .btn-success { background: var(--secondary); color: white; }
@@ -44,64 +46,66 @@
         .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
         .field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
         .input-wrapper { position: relative; display: flex; align-items: center; width: 100%; }
-        .field input { width: 100%; padding: 12px; border-radius: 8px; border: 2px solid var(--border); background: var(--card); color: var(--text); font-size: 16px; }
+        .field input { width: 100%; padding: 12px; border-radius: 8px; border: 2px solid var(--border); background: var(--card); color: var(--text); }
 
         .clear-btn { position: absolute; right: 10px; background: #9ca3af; color: white; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-top: 20px; }
-        .product-item { background: var(--bg); padding: 12px; border-radius: 12px; text-align: center; cursor: pointer; border: 1px solid var(--border); }
+        .product-item { background: var(--bg); padding: 12px; border-radius: 12px; text-align: center; cursor: pointer; position: relative; border: 2px solid transparent; }
 
-        /* Seção Sobre o Sistema */
-        .about-section { margin-top: 40px; padding: 20px; background: rgba(79, 70, 229, 0.05); border-radius: 15px; border: 2px dashed var(--primary); }
-
-        .footer-credits { margin-top: 30px; text-align: center; font-size: 14px; padding-bottom: 20px; border-top: 1px solid var(--border); padding-top: 20px; }
+        .about-section { margin-top: 40px; padding: 20px; background: rgba(79, 70, 229, 0.05); border-radius: 15px; font-size: 0.9rem; color: var(--text); border: 1px dashed var(--primary); }
+        .footer-credits { margin-top: 30px; text-align: center; font-size: 14px; padding-bottom: 20px; }
         .footer-credits a { color: var(--primary); text-decoration: none; font-weight: bold; margin: 0 10px; }
 
         #print-area { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 30px; }
-        .label-card { border: 1px solid #000; padding: 10px; background: white; color: black; text-align: center; }
+        .label-card { border: 1px solid #000; padding: 10px; background: white; color: black; text-align: center; position: relative; }
 
-        @media print { .app-container, .nav-menu, #tutorial-panel { display: none !important; } }
+        @media print { .app-container, .nav-menu, #tutorial-panel { display: none !important; } #print-area { grid-template-columns: repeat(3, 1fr); } }
     </style>
 </head>
 <body>
 
 <div id="tutorial-panel">
-    <h3 style="color:var(--primary); margin-top:0;">📖 Guia EtiqPRO</h3>
-    <div class="tut-item"><span>📷</span> <b>Scanner:</b> Lê o código via câmera.</div>
-    <div class="tut-item"><span>➕</span> <b>Gerar:</b> Cria a etiqueta na tela.</div>
-    <div class="tut-item"><span>🖨️</span> <b>Imprimir:</b> Gera o PDF para impressão.</div>
-    <div class="tut-item"><span>🗑️</span> <b>Limpar:</b> Apaga as etiquetas da tela.</div>
-    <button class="btn btn-primary" style="width:100%; margin-top:15px;" onclick="toggleTut()">Entendi</button>
+    <h2 style="color:var(--primary); display:flex; align-items:center; justify-content:space-between;">
+        📖 Guia EtiqPRO 
+        <span onclick="toggleTut()" style="cursor:pointer; font-size:1.5rem;">×</span>
+    </h2>
+    <div class="tut-item"><span class="tut-icon">📷</span><b>Scanner:</b> Use a câmera para ler códigos de barras e preencher o nome automaticamente se já estiver salvo.</div>
+    <div class="tut-item"><span class="tut-icon">➕</span><b>Gerar:</b> Cria as etiquetas na tela prontas para impressão.</div>
+    <div class="tut-item"><span class="tut-icon">📂</span><b>Galeria:</b> Seus produtos ficam salvos aqui. Toque em um para gerar etiquetas instantaneamente.</div>
+    <div class="tut-item"><span class="tut-icon">🖨️</span><b>Imprimir:</b> Gera um PDF otimizado para folhas de etiquetas.</div>
+    <div class="tut-item"><span class="tut-icon">🗑️</span><b>Limpar:</b> Remove as etiquetas da tela para iniciar um novo lote.</div>
+    <button class="btn btn-primary" style="width:100%; margin-top:20px;" onclick="toggleTut()">Entendi!</button>
 </div>
 
 <div class="app-container">
     <div class="nav-menu">
-        <a href="index.html" class="nav-link active">🏷️ Etiquetas</a>
-        <a href="estoque.html" class="nav-link">📦 Estoque Pro</a>
+        <a href="https://lucassilvasousa.github.io/EtiqPRO/" class="nav-link active">🏷️ Etiquetas</a>
+        <a href="https://lucassilvasousa.github.io/EtiqPRO/marca_de_validade/" class="nav-link">📦 Estoque Pro</a>
     </div>
 
     <div class="header">
-        <h1 style="margin:0; font-size: 22px;">📦 EtiqPRO <span style="color:var(--primary)">v19.7</span></h1>
+        <h1 style="margin:0; font-size: 24px;">📦 EtiqPRO <span style="color:var(--primary)">v19.3</span></h1>
         <div style="display:flex; gap:10px;">
             <button class="btn btn-dark" onclick="toggleTut()">❓ Guia</button>
             <button class="btn btn-dark" onclick="toggleTheme()">🌓</button>
         </div>
     </div>
 
-    <div id="scanner-view" style="display:none; border-radius:15px; overflow:hidden; margin-bottom:20px; border:3px solid var(--primary); background:#000;"></div>
+    <div id="scanner-view" style="display:none; border-radius:15px; overflow:hidden; margin-bottom:20px; border:3px solid var(--primary);"></div>
 
     <div class="input-grid">
         <div class="field">
             <label>Código / EAN</label>
             <div class="input-wrapper">
-                <input id="code" placeholder="Código">
+                <input id="code" placeholder="000000">
                 <button class="btn btn-dark" style="margin-left:5px;" onclick="toggleScanner()">📷</button>
             </div>
         </div>
         <div class="field">
-            <label>Produto</label>
+            <label>Nome do Produto</label>
             <div class="input-wrapper">
-                <input id="name" placeholder="Nome">
+                <input id="name" placeholder="Descrição">
                 <button class="clear-btn" onclick="document.getElementById('name').value=''">✕</button>
             </div>
         </div>
@@ -112,19 +116,20 @@
     </div>
 
     <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:10px;">
-        <button class="btn btn-primary" onclick="addLabels()">➕ Gerar</button>
+        <button class="btn btn-primary" onclick="addLabels()">➕ Gerar Etiquetas</button>
         <button class="btn btn-success" onclick="window.print()">🖨️ Imprimir</button>
         <button class="btn btn-danger" onclick="clearArea()">🗑️ Limpar</button>
     </div>
 
-    <div style="margin-top:25px;">
-        <h3 style="font-size:15px;">📂 Produtos Salvos</h3>
+    <div style="margin-top:30px;">
+        <h3 style="font-size:16px;">📂 Galeria de Produtos</h3>
         <div class="product-grid" id="db-list"></div>
     </div>
 
     <div class="about-section">
-        <h4 style="margin:0; color:var(--primary);">🚀 Sobre o Sistema</h4>
-        <p style="font-size: 0.85rem; line-height: 1.4;">Este sistema automatiza a identificação de mercadorias, melhorando a organização e agilizando a reposição. Em caso de dúvidas, entre em contato com o criador.</p>
+        <h4 style="margin-top:0; color:var(--primary);">🚀 Sobre o Sistema</h4>
+        <p>Este sistema foi desenvolvido para <b>automatizar e agilizar</b> o processo de identificação de mercadorias. Ao eliminar preenchimentos manuais e organizar o estoque visualmente, reduzimos erros de precificação e melhoramos a organização da loja.</p>
+        <p style="margin-bottom:0;">📌 <b>Dúvidas ou Suporte?</b> Entre em contato diretamente com o desenvolvedor responsável.</p>
     </div>
 
     <div class="footer-credits">
@@ -147,27 +152,35 @@ function addLabels(customCode, customName) {
     const c = customCode || document.getElementById('code').value.trim();
     const n = customName || document.getElementById('name').value.trim();
     const q = parseInt(document.getElementById('qty').value) || 1;
+
     if(!c || !n) return alert("Preencha os campos!");
+
     banco[c] = n;
     localStorage.setItem('etiq_v19_db', JSON.stringify(banco));
+
     for(let i=0; i<q; i++) { etiquetas.push({ id: Date.now() + i, c, n }); }
-    renderEtiquetas(); renderBanco();
+    renderEtiquetas();
+    renderBanco();
 }
 
 function renderEtiquetas() {
-    const area = document.getElementById('print-area'); area.innerHTML = "";
+    const area = document.getElementById('print-area');
+    area.innerHTML = "";
     etiquetas.forEach(e => {
-        const div = document.createElement('div'); div.className = 'label-card';
+        const div = document.createElement('div');
+        div.className = 'label-card';
         div.innerHTML = `<div style="font-weight:bold; font-size:11px; margin-bottom:5px;">${e.n}</div><svg id="s${e.id}"></svg>`;
         area.appendChild(div);
-        JsBarcode(`#s${e.id}`, e.c, { format: "CODE128", width: 1.5, height: 40, displayValue: true });
+        JsBarcode(`#s${e.id}`, e.c, { format: "CODE128", width: 1.5, height: 45, displayValue: true });
     });
 }
 
 function renderBanco() {
-    const list = document.getElementById('db-list'); list.innerHTML = "";
+    const list = document.getElementById('db-list');
+    list.innerHTML = "";
     Object.keys(banco).reverse().forEach(code => {
-        const div = document.createElement('div'); div.className = 'product-item';
+        const div = document.createElement('div');
+        div.className = 'product-item';
         div.onclick = () => addLabels(code, banco[code]);
         div.innerHTML = `<b>${banco[code]}</b><br><small>${code}</small>`;
         list.appendChild(div);
@@ -182,12 +195,13 @@ async function toggleScanner() {
     if (v.style.display === 'block') { if(scanner) await scanner.stop(); v.style.display = 'none'; return; }
     v.style.display = 'block';
     if(!scanner) scanner = new Html5Qrcode("scanner-view");
-    scanner.start({ facingMode: "environment" }, { fps: 15, qrbox: {width: 250, height: 150} }, (txt) => {
+    scanner.start({ facingMode: "environment" }, { fps: 10, qrbox: {width: 250, height: 150} }, (txt) => {
         document.getElementById('code').value = txt;
         if(banco[txt]) document.getElementById('name').value = banco[txt];
         scanner.stop(); v.style.display = 'none';
-    }).catch(() => { v.style.display = 'none'; });
+    }).catch(() => { alert("Erro na câmera"); v.style.display = 'none'; });
 }
+
 renderBanco();
 </script>
 </body>
