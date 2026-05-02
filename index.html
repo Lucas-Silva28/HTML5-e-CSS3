@@ -114,6 +114,7 @@
             cursor: pointer;
             position: relative;
             border: 2px solid transparent;
+            transition: 0.2s;
         }
 
         .product-item:hover { border-color: var(--primary); }
@@ -144,7 +145,6 @@
             position: relative;
         }
 
-        /* Modal Tutorial */
         .modal {
             position: fixed;
             inset: 0;
@@ -164,7 +164,7 @@
         }
 
         @media print {
-            .app-container, .modal, .btn-del-label { display: none !important; }
+            .app-container, .modal, .btn-del-label, .sound-assets { display: none !important; }
             #print-area { grid-template-columns: repeat(3, 1fr); gap: 5mm; }
         }
     </style>
@@ -231,8 +231,8 @@
     <div class="modal-content">
         <h2 style="margin-top:0">🚀 Guia de Uso</h2>
         <p>1. Digite o código ou use a câmera 📷.</p>
-        <p>2. Clique em "Gerar" para criar a etiqueta na tela.</p>
-        <p>3. Clique em "Imprimir" para gerar o PDF pronto para folha A4.</p>
+        <p>2. Clique em "Gerar" para criar a etiqueta.</p>
+        <p>3. Clique em "Imprimir" para gerar o PDF.</p>
         <button class="btn btn-primary" style="width:100%" onclick="closeGuide()">Entendi!</button>
     </div>
 </div>
@@ -273,7 +273,6 @@ function addLabels() {
     for(let i=0; i<q; i++) {
         etiquetas.push({ id: Date.now() + i, c, n });
     }
-
     renderEtiquetas();
     renderBanco();
 }
@@ -300,7 +299,7 @@ function renderBanco() {
     Object.keys(banco).reverse().forEach(code => {
         const div = document.createElement('div');
         div.className = 'product-item';
-        div.onclick = () => { document.getElementById('code').value = code; searchDB(code); playSnd('snd-add'); };
+        div.onclick = () => { document.getElementById('code').value = code; searchDB(code); };
         div.innerHTML = `<b>${banco[code]}</b><br><small>${code}</small>`;
         list.appendChild(div);
     });
@@ -332,7 +331,7 @@ async function toggleScanner() {
         searchDB(txt);
         scanner.stop();
         v.style.display = 'none';
-    }).catch(() => { alert("Permita a câmera no cadeado do navegador!"); v.style.display = 'none'; });
+    }).catch(() => { alert("Permita a câmera no cadeado!"); v.style.display = 'none'; });
 }
 
 renderBanco();
