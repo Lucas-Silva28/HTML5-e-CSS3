@@ -1,5 +1,7 @@
 # 🏷️ Opt TAG - Pro Market
 
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 > Sistema inteligente para gestão e impressão de etiquetas de gôndola.
 
 **🔗 [CLIQUE AQUI PARA ACESSAR O SISTEMA AO VIVO](https://lucas-silva28.github.io/HTML5-e-CSS3/)**
