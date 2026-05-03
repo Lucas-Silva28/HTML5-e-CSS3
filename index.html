@@ -93,29 +93,18 @@
         <p>O <b>Opt TAG Pro Market</b> foi arquitetado para otimizar a gestão visual do seu varejo, combinando agilidade no ponto de venda com precisão no controle de estoque. Este manual detalha a operação estratégica de cada funcionalidade.</p>
         
         <h3 style="color: var(--primary); margin-top: 20px; border-bottom: 1px solid var(--border); padding-bottom: 5px;">1. Entrada de Dados e Cadastro</h3>
-        <p><b>• Código de Barras:</b> O identificador universal do seu produto. Você pode digitá-lo manualmente, utilizar um leitor infravermelho conectado, ou clicar no ícone de câmera (📷) para escanear via smartphone. O botão "✕" limpa o campo instantaneamente. Se o código já existir na sua Galeria, o sistema preencherá o resto dos dados automaticamente (Auto-Fill).</p>
-        <p><b>• Descrição do Produto:</b> A nomenclatura que será impressa acima do código de barras. Mantenha descrições claras e diretas. Botão "✕" disponível para correção rápida.</p>
-        <p><b>• Preço de Venda:</b> Digite apenas os números (ex: 265 para R$ 2,65). O sistema formata automaticamente com a vírgula. Ao gerar a etiqueta, o símbolo monetário "R$" é inserido, garantindo padrão profissional de precificação. Botão "✕" para limpeza ágil.</p>
+        <p><b>• Código de Barras:</b> O identificador universal do seu produto. Ao digitar um código já salvo, o sistema restaura automaticamente nome, preço, tamanho e tipo de etiqueta.</p>
+        <p><b>• Descrição do Produto:</b> A nomenclatura que será impressa. Mantenha descrições claras.</p>
+        <p><b>• Preço de Venda:</b> Digite apenas os números. O sistema formata automaticamente.</p>
 
         <h3 style="color: var(--primary); margin-top: 20px; border-bottom: 1px solid var(--border); padding-bottom: 5px;">2. Configuração Visual da Etiqueta</h3>
-        <p><b>• Tipo de Etiqueta (Estratégia de Marketing):</b><br>
-        - <i>Normal (Branca):</i> Padrão de precificação diária. O valor é exibido em verde corporativo, transmitindo clareza e credibilidade.<br>
-        - <i>OFERTA (Amarela):</i> Focada em conversão. Aciona um layout de alto contraste (fundo amarelo, tarja preta "OFERTA" e preço em vermelho). Comprovado cientificamente para atrair a atenção do consumidor no PDV.</p>
-        <p><b>• Tamanho da Etiqueta:</b><br>
-        - <i>Pequena (P):</i> Ideal para itens delicados, joias, cosméticos ou frentes de gôndola estreitas.<br>
-        - <i>Média (M):</i> O padrão comercial para a maioria das prateleiras.<br>
-        - <i>Grande (G):</i> Desenvolvida para fardos, caixas de atacado e identificação visual à distância.</p>
-        <p><b>• Quantidade:</b> Defina quantas cópias deseja gerar de uma só vez para etiquetagem em lote.</p>
+        <p><b>• Tipo e Tamanho:</b> Ao gerar a etiqueta, estas configurações são salvas individualmente para cada produto no seu banco de dados local.</p>
 
         <h3 style="color: var(--primary); margin-top: 20px; border-bottom: 1px solid var(--border); padding-bottom: 5px;">3. Gerenciamento e Impressão</h3>
-        <p><b>• Gerar Etiquetas:</b> Compila os dados, salva o produto no banco de dados local (Galeria) de forma invisível e projeta as etiquetas na tela prontas para visualização.</p>
-        <p><b>• Imprimir:</b> Otimiza a interface, removendo botões e menus, garantindo que apenas as etiquetas sejam processadas pela impressora. Economiza papel alinhando os itens lado a lado.</p>
-        <p><b>• Galeria Pessoal:</b> Seu banco de dados integrado. Todos os produtos gerados são armazenados aqui. Clique em qualquer item para recarregá-lo instantaneamente nos campos superiores. O ícone de lixeira ("✕") remove o item do banco permanentemente.</p>
+        <p><b>• Galeria Pessoal:</b> Clique em qualquer item para recarregá-lo instantaneamente com todas as suas configurações originais de impressão.</p>
 
         <h3 style="color: var(--primary); margin-top: 20px; border-bottom: 1px solid var(--border); padding-bottom: 5px;">4. Segurança de Dados (Backup)</h3>
-        <p>O sistema armazena informações no cache do seu navegador. Para evitar perda de dados por formatação ou troca de máquina:<br>
-        <b>• Exportar:</b> Gera um arquivo criptografado (JSON) com todos os seus produtos. Salve-o em um pendrive ou nuvem.<br>
-        <b>• Importar:</b> Permite carregar o arquivo JSON previamente salvo, restaurando toda a sua galeria em qualquer outro computador ou navegador.</p>
+        <p><b>• Exportar/Importar:</b> Garanta que seus produtos e configurações personalizadas estejam seguros gerando backups periódicos.</p>
 
         <p style="text-align: center; margin-top: 25px; font-weight: bold; color: var(--secondary);">Em caso de falhas sistêmicas, contate o desenvolvedor via botão de suporte no rodapé.</p>
     </div>
@@ -168,7 +157,7 @@
         <label>Tamanho</label>
         <select id="size">
             <option value="size-p">Pequena (P)</option>
-            <option value="size-m" selected>Média (M)</option>
+            <option value="size-m">Média (M)</option>
             <option value="size-g">Grande (G)</option>
         </select>
     </div>
@@ -204,14 +193,19 @@
     </div>
 
     <div style="text-align: center; padding-bottom: 40px;">
-        <a href="https://wa.me/5594992786664" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: bold;">💬 Suporte WhatsApp</a>
+        <a href="https://wa.me/5594992786664?text=Olá!%20Estou%20usando%20o%20Opt%20TAG%20Pro%20e%20gostaria%20de%20tirar%20uma%20dúvida%20ou%20solicitar%20suporte." 
+           target="_blank" 
+           style="color: var(--primary); text-decoration: none; font-weight: bold;">
+           💬 Suporte WhatsApp
+        </a>
     </div>
 </div>
 
 <div id="print-area"></div>
 
 <script>
-let etiquetas = [];
+// PERSISTÊNCIA DE DADOS
+let etiquetas = JSON.parse(localStorage.getItem('opt_tag_pending_v5')) || [];
 let banco = JSON.parse(localStorage.getItem('opt_tag_v5_db')) || {};
 
 function formatPriceInput(input) {
@@ -226,29 +220,35 @@ function checkData() {
     if (banco[code]) {
         document.getElementById('name').value = banco[code].name;
         document.getElementById('price').value = (banco[code].price || "").replace("R$ ", "");
-        showToast("📦 Produto carregado!");
+        
+        // Restaura tamanho e status salvos especificamente para este produto
+        if (banco[code].size) document.getElementById('size').value = banco[code].size;
+        if (banco[code].status) document.getElementById('promo-status').value = banco[code].status;
+        
+        showToast("📦 Produto e configurações carregados!");
     }
 }
 
-function addLabels(customCode, customName, customPrice) {
+function addLabels(customCode, customName, customPrice, customSize, customStatus) {
     const code = customCode || document.getElementById('code').value.trim();
     const name = customName || document.getElementById('name').value.trim();
     let price = customPrice || document.getElementById('price').value.trim();
-    const status = document.getElementById('promo-status').value;
-    const size = document.getElementById('size').value;
+    const status = customStatus || document.getElementById('promo-status').value;
+    const size = customSize || document.getElementById('size').value;
     const qty = parseInt(document.getElementById('qty').value) || 1;
 
     if(!code || !name) return;
-
     if (price && !price.startsWith("R$")) price = "R$ " + price;
 
-    banco[code] = { name, price };
+    // Salva tudo no banco, incluindo tamanho e cor
+    banco[code] = { name, price, size, status };
     localStorage.setItem('opt_tag_v5_db', JSON.stringify(banco));
 
     for(let i=0; i<qty; i++) {
         etiquetas.push({ id: Date.now() + i, code, name, price, size, status });
     }
     
+    localStorage.setItem('opt_tag_pending_v5', JSON.stringify(etiquetas));
     renderEtiquetas(); renderBanco();
 }
 
@@ -276,13 +276,32 @@ function renderEtiquetas() {
     });
 }
 
+function deleteLabel(id) { 
+    etiquetas = etiquetas.filter(e => e.id !== id); 
+    localStorage.setItem('opt_tag_pending_v5', JSON.stringify(etiquetas));
+    renderEtiquetas(); 
+}
+
+function clearArea() { 
+    if(confirm("Limpar tela?")) { 
+        etiquetas = []; 
+        localStorage.removeItem('opt_tag_pending_v5');
+        renderEtiquetas(); 
+    } 
+}
+
 function renderBanco() {
     const list = document.getElementById('db-list'); list.innerHTML = "";
     Object.keys(banco).reverse().forEach(c => {
         const div = document.createElement('div');
         div.className = 'product-item';
+        // Quando clica na galeria, passa também o tamanho e status salvos
+        div.onclick = () => {
+            const p = banco[c];
+            addLabels(c, p.name, (p.price||"").replace("R$ ",""), p.size, p.status);
+        };
         div.innerHTML = `<button class="delete-item-btn" onclick="event.stopPropagation(); deleteItem('${c}')">✕</button>
-            <div onclick="addLabels('${c}', '${banco[c].name}', '${(banco[c].price||"").replace("R$ ","")}')">
+            <div>
                 <b>${banco[c].name}</b><br><small>${c}</small>
             </div>`;
         list.appendChild(div);
@@ -310,8 +329,6 @@ function importData(event) {
 }
 
 function deleteItem(c) { if(confirm("Apagar?")) { delete banco[c]; localStorage.setItem('opt_tag_v5_db', JSON.stringify(banco)); renderBanco(); } }
-function deleteLabel(id) { etiquetas = etiquetas.filter(e => e.id !== id); renderEtiquetas(); }
-function clearArea() { if(confirm("Limpar tela?")) { etiquetas = []; renderEtiquetas(); } }
 function toggleTheme() { document.body.classList.toggle('dark-mode'); }
 function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.classList.add('visible'); setTimeout(()=>t.classList.remove('visible'), 2000); }
 function toggleTut() { 
@@ -331,7 +348,9 @@ async function toggleScanner() {
         scanner.stop(); v.style.display = 'none';
     }).catch(() => { v.style.display = 'none'; });
 }
+
 renderBanco();
+renderEtiquetas();
 </script>
 </body>
 </html>
