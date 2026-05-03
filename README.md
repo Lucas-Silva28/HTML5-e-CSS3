@@ -16,24 +16,48 @@ O **Opt TAG** foi desenvolvido para otimizar a rotina de precificação no varej
 * **🎨 Etiquetas de Oferta:** Alternância rápida para o modo promocional (Amarelo/Preto/Vermelho).
 * **💾 Backup Seguro:** Função de exportar e importar dados em JSON.
 
-## 📸 Galeria de Demonstração
+## 📸 Demonstração Visual do Sistema
 
-| Página Inicial & Cadastro | Scanner de Código de Barras |
+| Logo do Projeto | Interface Inicial |
 |---|---|
-| ![Tela 1](assets/logo.png) | ![Tela 2](assets/imagem01.png) |
-| **Etiquetas Geradas** | **Modo Oferta (Destaque)** |
-| ![Tela 3](assets/imagem02.png) | ![Tela 4](assets/imagem03.png) |
-| **Gerenciamento da Galeria** | **Configurações de Tamanho** |
-| ![Tela 5](assets/imagem04.png) | ![Tela 6](assets/imagem05.png) |
-| **Backup e Exportação** | **Manual de Instruções** |
-| ![Tela 7](assets/imagem06.png) | ![Tela 8](assets/imagem07.png) |
-| **Visualização Mobile** | **Impressão Final** |
-| ![Tela 9](assets/imagem08.png) | ![Tela 10](assets/imagem09.png) |
-| ![App Mobile](assets/imagem10.png) |
+| ![Logo](assets/logo.jpg) | ![Interface Inicial](assets/imagem01.jpg) |
+| **Gerenciamento de Galeria** | **Tamanhos e Cores** |
+| ![Gerenciamento de Galeria](assets/imagem02.jpg) | ![Etiquetas Variadas](assets/imagem03.jpg) |
+| **Alteração de Temas (Dark/Light)** | **Scanner Ativo** |
+| ![Temas](assets/imagem04.jpg) | ![Scanner](assets/imagem05.jpg) |
+| **Tutorial Explicativo 01** | **Tutorial Explicativo 02** |
+| ![Tutorial 01](assets/imagem06.jpg) | ![Tutorial 02](assets/imagem07.jpg) |
+| **Tutorial Explicativo 03** | **Início do Sistema (Mobile)** |
+| ![Tutorial 03](assets/imagem08.jpg) | ![Início](assets/imagem09.jpg) |
 
-> *Imagens do sistema em funcionamento no modo Dark Mode.*
+> *Abaixo, a visualização completa da aplicação rodando em dispositivo móvel:*
+
+<p align="center">
+  <img src="assets/imagem10.jpg" width="400px" alt="App Mobile Full View">
+</p>
+*O sistema adapta-se perfeitamente a diferentes tamanhos de tela e preferências de uso.*
+
+>## 🛠️ Detalhes Técnicos e Diferenciais
+
+Este projeto foi construído focando na **Eficiência Operacional** do lojista. Os principais destaques técnicos são:
+
+* **Persistência de Dados:** Uso de `localStorage` para manter o banco de dados de produtos disponível mesmo sem internet.
+* **Performance UX:** Manipulação do DOM para garantir que a interface não trave durante a geração de múltiplas etiquetas.
+* **Responsividade:** CSS Grid e Flexbox garantindo que o painel de controle funcione de tablets a smartphones antigos.
+* **Segurança de Backup:** Algoritmo de exportação para arquivos `.json` permitindo a migração de dados entre dispositivos.
+
+## 📜 Licença
+
+Este projeto está licenciado sob a **Licença MIT**. Isso significa que você pode:
+* Usar o sistema para fins comerciais ou pessoais.
+* Modificar o código conforme sua necessidade.
+* Distribuir o código.
+* *Apenas pedimos que mantenha os créditos originais ao desenvolvedor.*
+
+---
+
+>  
 > 
-> *O sistema adapta-se perfeitamente a diferentes tamanhos de tela e preferências de uso.*
 ## 🛠️ Tecnologias
 * HTML5 / CSS3 (Design Responsivo & Dark Mode)
 * JavaScript Vanilla (Lógica de Persistência e UI)
@@ -45,3 +69,12 @@ O **Opt TAG** foi desenvolvido para otimizar a rotina de precificação no varej
 * 📷 Instagram: [@lucassilvasousa_48](https://www.instagram.com/lucassilvasousa_48)
 * 💬 WhatsApp: [Numero whatsapp](https://wa.me/número whatsapp)
 * 
+
+
+## 🤝 Contribuições
+
+Sugestões e melhorias são sempre bem-vindas!
+1. Faça um **Fork** do projeto.
+2. Crie uma **Branch** para sua modificação (`git checkout -b feature/NovaFuncionalidade`).
+3. Faça o **Commit** das suas alterações.
+4. Abra um **Pull Request**.
