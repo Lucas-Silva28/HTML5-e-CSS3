@@ -133,9 +133,20 @@ Os produtos que você cadastra ficam salvos na sua **Galeria**. Isso permite que
 
 ---
 
-## ⚖️ Licença
+## ​⚖️ Licença e Contribuição ##
 
-Este projeto está licenciado sob a **Licença MIT**.
+​Este projeto está sob a Licença MIT. Isso significa que você é livre para usar, copiar, modificar e até distribuir o software, desde que mantenha os créditos originais da KODA Sistemas.
+
+##​ 🤝 Apoie este Projeto ##
+
+​O Opt TAG Pro é um projeto de código aberto desenvolvido com foco em ajudar pequenos e médios empreendedores. Se este sistema foi útil para o seu negócio, você pode apoiar de duas formas:
+​
+## Siga o desenvolvedor: ##
+
+Acompanhe as atualizações e novos lançamentos no meu Instagram ## @lucassilvasousa_48. ##
+​Dê uma Estrela: Se você está no GitHub, clique não #⭐# no topo da página. Isso ajuda o projeto a ganhar visibilidade e chegar a mais lojistas!
+
+#⭐#
 
 ---
 **Desenvolvido com ☕ e Lógica por Lucas Silva | KODA Sistemas** *Araguaína, Tocantins, Brasil*
