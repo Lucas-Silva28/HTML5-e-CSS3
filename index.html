@@ -65,7 +65,7 @@
         .product-item { background: var(--bg); padding: 15px; border-radius: 15px; text-align: center; cursor: pointer; position: relative; border: 2px solid transparent; }
         .delete-item-btn { position: absolute; top: -5px; right: -5px; background: var(--danger); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; z-index: 10; }
 
-        #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 15px 30px; border-radius: 50px; font-weight: bold; z-index: 3000; opacity: 0; transition: 0.4s; pointer-events: none; text-align: center; }
+        #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 15px 30px; border-radius: 50px; font-weight: bold; z-index: 3000; opacity: 0; transition: 0.4s; pointer-events: none; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         #toast.visible { opacity: 1; transform: translateX(-50%) translateY(10px); }
 
         .fab-tutorial { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 30px; cursor: pointer; z-index: 100; border: none; }
@@ -90,37 +90,21 @@
     <h2 style="color: var(--primary); margin-top: 0;">Manual Operacional: Opt TAG Pro</h2>
     
     <div style="text-align: left; line-height: 1.6; font-size: 14px; color: var(--text);">
-        <p>O <b>Opt TAG Pro Market</b> foi arquitetado para otimizar a gestão visual do seu varejo, combinando agilidade no ponto de venda com precisão no controle de estoque. Este manual detalha a operação estratégica de cada funcionalidade.</p>
-        
-        <h3 style="color: var(--primary); margin-top: 20px; border-bottom: 1px solid var(--border); padding-bottom: 5px;">1. Entrada de Dados e Cadastro</h3>
-        <p><b>• Código de Barras:</b> O identificador universal do seu produto. Ao digitar um código já salvo, o sistema restaura automaticamente nome, preço, tamanho e tipo de etiqueta.</p>
-        <p><b>• Descrição do Produto:</b> A nomenclatura que será impressa. Mantenha descrições claras.</p>
-        <p><b>• Preço de Venda:</b> Digite apenas os números. O sistema formata automaticamente.</p>
-
-        <h3 style="color: var(--primary); margin-top: 20px; border-bottom: 1px solid var(--border); padding-bottom: 5px;">2. Configuração Visual da Etiqueta</h3>
-        <p><b>• Tipo e Tamanho:</b> Ao gerar a etiqueta, estas configurações são salvas individualmente para cada produto no seu banco de dados local.</p>
-
-        <h3 style="color: var(--primary); margin-top: 20px; border-bottom: 1px solid var(--border); padding-bottom: 5px;">3. Gerenciamento e Impressão</h3>
-        <p><b>• Galeria Pessoal:</b> Clique em qualquer item para recarregá-lo instantaneamente com todas as suas configurações originais de impressão.</p>
-
-        <h3 style="color: var(--primary); margin-top: 20px; border-bottom: 1px solid var(--border); padding-bottom: 5px;">4. Segurança de Dados (Backup)</h3>
-        <p><b>• Exportar/Importar:</b> Garanta que seus produtos e configurações personalizadas estejam seguros gerando backups periódicos.</p>
-
-        <p style="text-align: center; margin-top: 25px; font-weight: bold; color: var(--secondary);">Em caso de falhas sistêmicas, contate o desenvolvedor via botão de suporte no rodapé.</p>
+        <p>O <b>Opt TAG Pro Market</b> foi arquitetado para otimizar a gestão visual do seu varejo.</p>
+        <h3 style="color: var(--primary); margin-top: 20px; border-bottom: 1px solid var(--border); padding-bottom: 5px;">Operação Básica</h3>
+        <p>• Preencha o código, descrição e preço.<br>• Escolha o tamanho e tipo.<br>• Clique em Gerar e depois Imprimir.</p>
     </div>
-    
     <button class="btn btn-primary" style="margin-top:20px; width: 100%;" onclick="toggleTut()">Fechar Manual</button>
 </div>
 
 <div class="app-container">
     <div class="header">
-    <div style="display: flex; align-items: center; gap: 12px;">
-        <img src="assets/logo-koda.png" alt="Koda Logo" style="width: 50px; height: auto; border-radius: 8px;">
-        <h1>Opt TAG Pro</h1>
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <img src="assets/logo-koda.png" alt="Koda Logo" style="width: 50px; height: auto; border-radius: 8px;">
+            <h1>Opt TAG Pro</h1>
+        </div>
+        <button class="btn btn-dark" style="width: auto; padding: 8px 15px; font-size: 12px;" onclick="toggleTheme()">🌓 Tema</button>
     </div>
-    <button class="btn btn-dark" style="width: auto; padding: 8px 15px; font-size: 12px;" onclick="toggleTheme()">🌓 Tema</button>
-</div>
-
 
     <div id="scanner-view" style="display:none; border-radius:15px; overflow:hidden; margin-bottom:20px; border:4px solid var(--primary); width: 100%;"></div>
 
@@ -196,22 +180,19 @@
         <input type="file" id="importFile" style="display:none" onchange="importData(event)">
     </div>
 
-        <div style="text-align: center; margin-top: 50px; padding-bottom: 20px; border-top: 1px solid var(--border); padding-top: 20px;">
-    <img src="assets/logo-koda.png" width="40" style="margin-bottom: 10px; opacity: 0.8;">
-    <div style="font-weight: 800; color: var(--text-light); letter-spacing: 1px; font-size: 14px;">KODA SISTEMAS</div>
-    <p style="font-size: 10px; color: var(--text-light); margin: 5px 0 15px 0;">​© 2026 Koda Sistemas - Soluções Tecnológicaso</p>
-    <a href="https://www.instagram.com/lucassilvasousa_48" target="_blank" style="color: #E1306C; text-decoration: none; font-size: 13px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 6px;">
-        📸 @lucassilvasousa_48
-    </a>
-</div>
-
-
+    <div style="text-align: center; margin-top: 50px; padding-bottom: 20px; border-top: 1px solid var(--border); padding-top: 20px;">
+        <img src="assets/logo-koda.png" width="40" style="margin-bottom: 10px; opacity: 0.8;">
+        <div style="font-weight: 800; color: var(--text-light); letter-spacing: 1px; font-size: 14px;">KODA SISTEMAS</div>
+        <p style="font-size: 10px; color: var(--text-light); margin: 5px 0 15px 0;">© 2026 Koda Sistemas - Soluções Tecnológicas</p>
+        <a href="https://www.instagram.com/lucassilvasousa_48" target="_blank" style="color: #E1306C; text-decoration: none; font-size: 13px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            📸 @lucassilvasousa_48
+        </a>
+    </div>
 </div>
 
 <div id="print-area"></div>
 
 <script>
-// PERSISTÊNCIA DE DADOS
 let etiquetas = JSON.parse(localStorage.getItem('opt_tag_pending_v5')) || [];
 let banco = JSON.parse(localStorage.getItem('opt_tag_v5_db')) || {};
 
@@ -227,12 +208,9 @@ function checkData() {
     if (banco[code]) {
         document.getElementById('name').value = banco[code].name;
         document.getElementById('price').value = (banco[code].price || "").replace("R$ ", "");
-        
-        // Restaura tamanho e status salvos especificamente para este produto
         if (banco[code].size) document.getElementById('size').value = banco[code].size;
         if (banco[code].status) document.getElementById('promo-status').value = banco[code].status;
-        
-        showToast("📦 Produto e configurações carregados!");
+        showToast("📦 Dados do produto carregados!");
     }
 }
 
@@ -244,10 +222,13 @@ function addLabels(customCode, customName, customPrice, customSize, customStatus
     const size = customSize || document.getElementById('size').value;
     const qty = parseInt(document.getElementById('qty').value) || 1;
 
-    if(!code || !name) return;
+    if(!code || !name) {
+        showToast("⚠️ Preencha código e nome!");
+        return;
+    }
+    
     if (price && !price.startsWith("R$")) price = "R$ " + price;
 
-    // Salva tudo no banco, incluindo tamanho e cor
     banco[code] = { name, price, size, status };
     localStorage.setItem('opt_tag_v5_db', JSON.stringify(banco));
 
@@ -256,7 +237,9 @@ function addLabels(customCode, customName, customPrice, customSize, customStatus
     }
     
     localStorage.setItem('opt_tag_pending_v5', JSON.stringify(etiquetas));
-    renderEtiquetas(); renderBanco();
+    renderEtiquetas(); 
+    renderBanco();
+    showToast(`🏷️ ${qty} etiqueta(s) gerada(s)!`);
 }
 
 function renderEtiquetas() {
@@ -273,7 +256,6 @@ function renderEtiquetas() {
             ${e.price ? `<div class="price-tag">${e.price}</div>` : ''}
         `;
         area.appendChild(div);
-        
         JsBarcode(`#s${e.id}`, e.code, { 
             format: "CODE128", 
             width: e.size === 'size-p' ? 1.2 : 1.8, 
@@ -287,13 +269,15 @@ function deleteLabel(id) {
     etiquetas = etiquetas.filter(e => e.id !== id); 
     localStorage.setItem('opt_tag_pending_v5', JSON.stringify(etiquetas));
     renderEtiquetas(); 
+    showToast("❌ Etiqueta removida.");
 }
 
 function clearArea() { 
-    if(confirm("Limpar tela?")) { 
+    if(confirm("Limpar todas as etiquetas da tela?")) { 
         etiquetas = []; 
         localStorage.removeItem('opt_tag_pending_v5');
         renderEtiquetas(); 
+        showToast("🗑️ Tela limpa!");
     } 
 }
 
@@ -302,15 +286,12 @@ function renderBanco() {
     Object.keys(banco).reverse().forEach(c => {
         const div = document.createElement('div');
         div.className = 'product-item';
-        // Quando clica na galeria, passa também o tamanho e status salvos
         div.onclick = () => {
             const p = banco[c];
             addLabels(c, p.name, (p.price||"").replace("R$ ",""), p.size, p.status);
         };
         div.innerHTML = `<button class="delete-item-btn" onclick="event.stopPropagation(); deleteItem('${c}')">✕</button>
-            <div>
-                <b>${banco[c].name}</b><br><small>${c}</small>
-            </div>`;
+            <div><b>${banco[c].name}</b><br><small>${c}</small></div>`;
         list.appendChild(div);
     });
 }
@@ -319,8 +300,9 @@ function exportData() {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(banco));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", "backup_etiquetas.json");
+    downloadAnchor.setAttribute("download", "backup_etiquetas_koda.json");
     downloadAnchor.click();
+    showToast("📤 Backup exportado com sucesso!");
 }
 
 function importData(event) {
@@ -328,16 +310,39 @@ function importData(event) {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = function(e) {
-        banco = {...banco, ...JSON.parse(e.target.result)};
-        localStorage.setItem('opt_tag_v5_db', JSON.stringify(banco));
-        renderBanco(); showToast("✅ Restaurado!");
+        try {
+            banco = {...banco, ...JSON.parse(e.target.result)};
+            localStorage.setItem('opt_tag_v5_db', JSON.stringify(banco));
+            renderBanco(); 
+            showToast("✅ Banco de dados restaurado!");
+        } catch (err) {
+            showToast("❌ Erro ao importar arquivo.");
+        }
     };
     reader.readAsText(file);
 }
 
-function deleteItem(c) { if(confirm("Apagar?")) { delete banco[c]; localStorage.setItem('opt_tag_v5_db', JSON.stringify(banco)); renderBanco(); } }
-function toggleTheme() { document.body.classList.toggle('dark-mode'); }
-function showToast(m) { const t = document.getElementById('toast'); t.innerText = m; t.classList.add('visible'); setTimeout(()=>t.classList.remove('visible'), 2000); }
+function deleteItem(c) { 
+    if(confirm("Apagar este produto da galeria permanentemente?")) { 
+        delete banco[c]; 
+        localStorage.setItem('opt_tag_v5_db', JSON.stringify(banco)); 
+        renderBanco(); 
+        showToast("🗑️ Produto excluído.");
+    } 
+}
+
+function toggleTheme() { 
+    document.body.classList.toggle('dark-mode'); 
+    showToast("🌓 Modo de visualização alterado.");
+}
+
+function showToast(m) { 
+    const t = document.getElementById('toast'); 
+    t.innerText = m; 
+    t.classList.add('visible'); 
+    setTimeout(()=>t.classList.remove('visible'), 2500); 
+}
+
 function toggleTut() { 
     const p = document.getElementById('tutorial-panel'), b = document.getElementById('tutorial-backdrop');
     const on = p.style.display === 'block';
@@ -353,7 +358,11 @@ async function toggleScanner() {
     scanner.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 }, (txt) => {
         document.getElementById('code').value = txt; checkData();
         scanner.stop(); v.style.display = 'none';
-    }).catch(() => { v.style.display = 'none'; });
+        showToast("📷 Código capturado!");
+    }).catch(() => { 
+        v.style.display = 'none'; 
+        showToast("❌ Erro ao abrir câmera.");
+    });
 }
 
 renderBanco();
