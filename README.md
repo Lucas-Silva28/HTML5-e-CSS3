@@ -2,11 +2,18 @@
   <br>
   <img src="./assets/logo-koda.png" alt="Koda Sistemas Logo" width="280px">
   <br>
+  <br>
+  <a href="COLOQUE_SEU_LINK_AQUI" target="_blank">
+    <img src="https://img.shields.io/badge/ACESSAR%20SISTEMA-CLIQUE%20AQUI-success?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Acessar Sistema">
+  </a>
+  <br>
 </div>
 
-# 🛒 Controle de Validade Profissional (Mobile Edition)
+# 🏷️ Opt TAG Pro (Mobile Edition)
 
-
+<p align="center">
+  <img src="./assets/imagem01.jpg" alt="Banner Opt TAG Pro" width="100%">
+</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5">
@@ -15,124 +22,114 @@
 </p>
 
 ---
+
 ## 🔗 Link de Acesso Online
-Você pode testar o sistema em tempo real clicando no link abaixo:
-👉 **[https://lucas-silva28.github.io/HTML5-e-CSS3/**
+Você pode testar o gerador de etiquetas em tempo real clicando no link abaixo:
+👉 **[Clique aqui para abrir o Opt TAG Pro](COLOQUE_SEU_LINK_AQUI)**
+
 ---
 
 ## 📸 Demonstração do Sistema
 
-Abaixo, as etapas de operação da interface mobile:
+Abaixo, as etapas de operação da interface para geração de etiquetas:
 
 <p align="center">
-  <b>📱 Tela inicial e alertas de validade</b><br>
-  <img src="./assets/imagem02.jpg" width="80%" title="Dashboard com Alertas">
+  <b>📱 Tela inicial para entrada de dados e preços</b><br>
+  <img src="./assets/imagem02.jpg" width="80%">
 </p>
 
 <p align="center">
-  <b>⚙️ Configuração do banco de dados</b><br>
-  <img src="./assets/imagem03.jpg" width="80%" title="Configuração de Banco de Dados">
+  <b>📷 Scanner de código de barras via câmera</b><br>
+  <img src="./assets/imagem03.jpg" width="80%">
 </p>
 
 <p align="center">
-  <b>📄 Geração de relatórios em PDF</b><br>
-  <img src="./assets/imagem04.jpg" width="80%" title="Relatório PDF Gerado">
+  <b>🏷️ Seleção de tamanhos de etiquetas (P, M e G)</b><br>
+  <img src="./assets/imagem04.jpg" width="80%">
 </p>
 
 <p align="center">
-  <b>🌙 Interface em Modo Escuro (Dark Mode)</b><br>
-  <img src="./assets/imagem05.jpg" width="80%" title="Interface Dark Mode">
+  <b>🌙 Interface Opt TAG em Modo Escuro</b><br>
+  <img src="./assets/imagem05.jpg" width="80%">
 </p>
 
 <p align="center">
-  <b>📦 Painel de gestão de estoque</b><br>
-  <img src="./assets/imagem06.jpg" width="80%" title="Gestão de Estoque">
+  <b>🔥 Modo Oferta: Etiquetas destacadas em amarelo</b><br>
+  <img src="./assets/imagem06.jpg" width="80%">
 </p>
 
 <p align="center">
-  <b>🔍 Sistema de filtros e buscas rápidas</b><br>
-  <img src="./assets/imagem07.jpg" width="80%" title="Filtros de Busca">
+  <b>📂 Galeria de produtos salvos para geração rápida</b><br>
+  <img src="./assets/imagem07.jpg" width="80%">
 </p>
 
 <p align="center">
-  <b>💾 Backup e segurança dos dados</b><br>
-  <img src="./assets/imagem08.jpg" width="80%" title="Backup">
+  <b>🖨️ Pré-visualização das etiquetas para impressão</b><br>
+  <img src="./assets/imagem08.jpg" width="80%">
 </p>
 
 <p align="center">
-  <b>📲 Atalhos de exportação via WhatsApp</b><br>
-  <img src="./assets/imagem09.jpg" width="80%" title="WhatsApp">
+  <b>⚙️ Ajustes de contraste para leitura em tela</b><br>
+  <img src="./assets/imagem09.jpg" width="80%">
 </p>
 
 <p align="center">
-  <b>✅ Finalização de inventário</b><br>
-  <img src="./assets/imagem10.jpg" width="80%" title="Inventário">
+  <b>✅ Etiquetas geradas prontas para uso</b><br>
+  <img src="./assets/imagem10.jpg" width="80%">
 </p>
-
----
-
-
----
-
-Este projeto é um ecossistema completo para gestão de estoque e monitoramento de prazos de validade, projetado especificamente para operação em dispositivos móveis. Desenvolvido por **Lucas Silva**, Analista de Sistemas e Desenvolvedor Full Stack, o sistema foca em alta performance, usabilidade e agilidade no chão de loja.
 
 ---
 
 ## 🚀 Visão Geral do Projeto
 
-O **Controle de Validade Profissional** nasceu da necessidade de eliminar perdas financeiras causadas por produtos vencidos e pela falta de organização em inventários rotativos. Diferente de planilhas complexas, este sistema oferece uma interface fluida que permite o lançamento de centenas de itens em poucos minutos, diretamente do celular.
+O **Opt TAG Pro** é uma ferramenta profissional desenvolvida para lojistas que precisam de agilidade na precificação de produtos. O foco principal é permitir que, através de um celular, o usuário possa escanear um item, definir o preço e gerar uma etiqueta com código de barras padronizado em segundos.
 
 ### 🎯 Objetivos Principais
-- **Redução de Desperdício:** Identificação visual imediata de itens em estado crítico.
-- **Mobilidade Total:** Desenvolvido para rodar no navegador do celular, sem necessidade de hardware caro.
-- **Relatórios Ágeis:** Geração de documentos PDF e mensagens formatadas para WhatsApp em segundos.
-- **Independência de Rede:** Funciona totalmente offline através de armazenamento local (LocalStorage).
+- **Agilidade na Precificação:** Gerar etiquetas individuais ou em massa sem depender de softwares pesados.
+- **Scanner Mobile:** Utilização da câmera do smartphone para identificar códigos de barras existentes.
+- **Customização de Ofertas:** Diferenciação visual imediata entre preços normais e itens em promoção.
+- **Independência de Rede:** Funciona offline através de armazenamento local (LocalStorage).
 
 ---
 
 ## ⚙️ Especificações Técnicas
 
-O sistema utiliza tecnologias modernas de front-end para garantir que o software seja leve e compatível com qualquer dispositivo Android ou iOS.
+O sistema utiliza tecnologias modernas de front-end para garantir leveza e alta precisão nos códigos gerados.
 
 - **Linguagens:** HTML5, CSS3 (Custom Properties), JavaScript (ES6+).
-- **Persistência de Dados:** LocalStorage API para salvamento automático.
+- **Persistência de Dados:** LocalStorage API para a galeria de produtos.
 - **Bibliotecas Externas:**
-  - [jsPDF](https://github.com/parallax/jsPDF): Geração de documentos PDF.
-  - [AutoTable](https://github.com/simonbengtsson/jsPDF-autotable): Formatação de tabelas profissionais.
+  - [JsBarcode](https://github.com/lindell/JsBarcode): Geração de códigos de barras de alta precisão.
+  - [Html5-Qrcode](https://github.com/mebjas/html5-qrcode): Processamento de scanner via câmera.
 
 ---
 
 ## 📱 Guia de Versionamento e Fluxo Mobile
 
-Como o projeto é mantido 100% via dispositivos móveis, a estrutura de versionamento segue um fluxo rigoroso para garantir a evolução do código:
+Como o projeto é mantido 100% via dispositivos móveis, a estrutura de versionamento segue um fluxo rigoroso:
 
-1. **Editor de Código:** Utilização do app **Acode** para edição de scripts.
-2. **Controle de Versão:** Uso de commits granulares para cada nova funcionalidade.
-3. **Histórico de Commits:** Cada ajuste (ex: "Ajuste de PDF", "Correção de Dark Mode") recebe um commit exclusivo, criando uma linha do tempo clara de evolução.
+1. **Editor de Código:** Utilização do app **Acode**.
+2. **Controle de Versão:** Uso de commits granulares para cada melhoria na renderização das etiquetas.
+3. **Histórico:** Evolução documentada desde a lógica de scanner até o ajuste de layouts de impressão.
 
 ---
 
 ## 📖 Manual de Operação (Passo a Passo)
 
-### 1. Configuração Inicial
-Vá até a aba **⚙️ Banco de Dados e Perfil** para configurar o nome do Responsável e da Loja. Isto personalizará todos os teus relatórios PDF automaticamente.
+### 1. Entrada de Dados
+Insira o código de barras (digitando ou usando a câmera), o nome do produto e o preço.
 
-### 2. Cadastro e Lançamento
-- Cadastre produtos fixos no **Banco** para agilizar a entrada.
-- Utilize o campo de **Pesquisa** para preenchimento automático de gramatura e nome.
-- O sistema ordena a lista automaticamente: o que vence primeiro fica no topo.
+### 2. Escolha do Layout
+- **Tamanhos:** Escolha entre P, M ou G dependendo do tamanho da sua prateleira ou produto.
+- **Tipo:** Selecione "Normal" ou "OFERTA" para mudar a cor da etiqueta automaticamente.
 
-### 3. Gestão de Alertas Visuais
-- 🔴 **CRÍTICO:** Ação imediata (dentro da margem de alerta).
-- 🟡 **ALERTA:** Vencimento próximo (próximos 15 dias após a margem).
-- 🟢 **ÓTIMO:** Prazo seguro.
+### 3. Impressão e Uso
+As etiquetas aparecem no final da página. Você pode usar a função de imprimir do navegador ou tirar um print para leitura direta em coletores de dados.
 
 ---
 
-## 💾 Segurança e Backup
-
-- **Exportar Backup:** Gera um arquivo `.json` com todos os dados. Recomendado fazer diariamente.
-- **Importar Backup:** Permite restaurar os dados em outro aparelho ou após limpeza de cache.
+## 💾 Segurança e Galeria
+Os produtos que você cadastra ficam salvos na sua **Galeria**. Isso permite que você gere a etiqueta novamente no futuro com apenas um clique, sem precisar digitar tudo de novo.
 
 ---
 
@@ -142,3 +139,5 @@ Este projeto está licenciado sob a **Licença MIT**.
 
 ---
 **Desenvolvido com ☕ e Lógica por Lucas Silva | KODA Sistemas** *Araguaína, Tocantins, Brasil*
+
+-_-_-_-_-_-_
