@@ -7,7 +7,7 @@
 # 🛒 Controle de Validade Profissional (Mobile Edition)
 
 <p align="center">
-  <img src="./assets/banner.jpg" alt="Banner Controle de Validade" width="100%">
+  <img src="./assets/Imagem01.jpg" alt="Banner Controle de Validade" width="100%">
 </p>
 
 <p align="center">
@@ -23,13 +23,13 @@
 Abaixo, algumas capturas de tela da interface operando em ambiente mobile:
 
 <p align="center">
-  <img src="./assets/tela1.jpg" width="45%" title="Dashboard com Alertas">
-  <img src="./assets/tela2.jpg" width="45%" title="Configuração de Banco de Dados">
+  <img src="./assets/Imagem02.jpg" width="45%" title="Dashboard com Alertas">
+  <img src="./assets/Imagem03.jpg" width="45%" title="Configuração de Banco de Dados">
 </p>
 
 <p align="center">
-  <img src="./assets/tela3.jpg" width="45%" title="Relatório PDF Gerado">
-  <img src="./assets/tela4.jpg" width="45%" title="Interface Dark Mode">
+  <img src="./assets/Imagem04.jpg" width="45%" title="Relatório PDF Gerado">
+  <img src="./assets/Imagem05.jpg" width="45%" title="Interface Dark Mode">
 </p>
 
 ---
