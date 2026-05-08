@@ -6,9 +6,7 @@
 
 # 🛒 Controle de Validade Profissional (Mobile Edition)
 
-<p align="center">
-  <img src="./assets/imagem01.jpg" alt="Banner Controle de Validade" width="100%">
-</p>
+
 
 <p align="center">
   <img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5">
@@ -21,6 +19,10 @@
 ## 📸 Demonstração do Sistema
 
 Abaixo, algumas capturas de tela da interface operando em ambiente mobile:
+
+<p align="center">
+  <img src="./assets/imagem01.jpg" alt="Banner Controle de Validade" width="100%">
+</p>
 
 <p align="center">
   <img src="./assets/imagem02.jpg" width="45%" title="Dashboard com Alertas">
