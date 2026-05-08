@@ -16,28 +16,59 @@
 
 ---
 
+---
+
 ## 📸 Demonstração do Sistema
 
-Abaixo, algumas capturas de tela da interface operando em ambiente mobile:
+Abaixo, as etapas de operação da interface mobile:
 
 <p align="center">
-  <img src="./assets/imagem01.jpg" alt="Banner Controle de Validade" width="100%">
+  <b>📱 Tela inicial e alertas de validade</b><br>
+  <img src="./assets/imagem02.jpg" width="80%" title="Dashboard com Alertas">
 </p>
 
 <p align="center">
-  <img src="./assets/imagem02.jpg" width="45%" title="Dashboard com Alertas">
-  <img src="./assets/imagem03.jpg" width="45%" title="Configuração de Banco de Dados">
+  <b>⚙️ Configuração do banco de dados</b><br>
+  <img src="./assets/imagem03.jpg" width="80%" title="Configuração de Banco de Dados">
 </p>
 
 <p align="center">
-  <img src="./assets/imagem04.jpg" width="45%" title="Relatório PDF Gerado">
-  <img src="./assets/imagem05.jpg" width="45%" title="Interface Dark Mode">
+  <b>📄 Geração de relatórios em PDF</b><br>
+  <img src="./assets/imagem04.jpg" width="80%" title="Relatório PDF Gerado">
 </p>
 
 <p align="center">
-  <img src="./assets/imagem06.jpg" width="45%" title="Gestão de Estoque">
-  <img src="./assets/imagem07.jpg" width="45%" title="Filtros de Busca">
+  <b>🌙 Interface em Modo Escuro (Dark Mode)</b><br>
+  <img src="./assets/imagem05.jpg" width="80%" title="Interface Dark Mode">
 </p>
+
+<p align="center">
+  <b>📦 Painel de gestão de estoque</b><br>
+  <img src="./assets/imagem06.jpg" width="80%" title="Gestão de Estoque">
+</p>
+
+<p align="center">
+  <b>🔍 Sistema de filtros e buscas rápidas</b><br>
+  <img src="./assets/imagem07.jpg" width="80%" title="Filtros de Busca">
+</p>
+
+<p align="center">
+  <b>💾 Backup e segurança dos dados</b><br>
+  <img src="./assets/imagem08.jpg" width="80%" title="Backup">
+</p>
+
+<p align="center">
+  <b>📲 Atalhos de exportação via WhatsApp</b><br>
+  <img src="./assets/imagem09.jpg" width="80%" title="WhatsApp">
+</p>
+
+<p align="center">
+  <b>✅ Finalização de inventário</b><br>
+  <img src="./assets/imagem10.jpg" width="80%" title="Inventário">
+</p>
+
+---
+
 
 ---
 
