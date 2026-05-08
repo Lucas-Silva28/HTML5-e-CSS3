@@ -1,82 +1,104 @@
-# 🏷️ Opt TAG - Pro Market
+<div align="center">
+  <br>
+  <img src="./assets/logo-koda.png" alt="Koda Sistemas Logo" width="280px">
+  <br>
+</div>
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-
-> Sistema inteligente para gestão e impressão de etiquetas de gôndola.
-
-**🔗 [CLIQUE AQUI PARA ACESSAR O SISTEMA AO VIVO](https://lucas-silva28.github.io/HTML5-e-CSS3/)**
-
----
-
-## 🚀 O que o Opt TAG faz?
-
-O **Opt TAG** foi desenvolvido para otimizar a rotina de precificação no varejo. Diferente de geradores comuns, ele possui memória local e foco em agilidade mobile.
-
-* **⚡ Fluxo Ágil:** Ao gerar uma etiqueta, os campos limpam automaticamente sem subir o teclado, permitindo biper vários produtos em sequência sem interrupções.
-* **🧠 Banco de Dados Local:** O sistema memoriza o nome, preço e tamanho de cada código de barras. Se você biper o mesmo produto amanhã, os dados aparecem sozinhos!
-* **📸 Scanner Integrado:** Use a câmera do celular para ler códigos diretamente no navegador.
-* **🎨 Etiquetas de Oferta:** Alternância rápida para o modo promocional (Amarelo/Preto/Vermelho).
-* **💾 Backup Seguro:** Função de exportar e importar dados em JSON.
-
-## 📸 Demonstração Visual do Sistema
-
-| Logo do Projeto | Interface Inicial |
-|---|---|
-| ![Logo](assets/logo.jpg) | ![Interface Inicial](assets/imagem01.jpg) |
-| **Gerenciamento de Galeria** | **Tamanhos e Cores** |
-| ![Gerenciamento de Galeria](assets/imagem02.jpg) | ![Etiquetas Variadas](assets/imagem03.jpg) |
-| **Alteração de Temas (Dark/Light)** | **Scanner Ativo** |
-| ![Temas](assets/imagem04.jpg) | ![Scanner](assets/imagem05.jpg) |
-| **Tutorial Explicativo 01** | **Tutorial Explicativo 02** |
-| ![Tutorial 01](assets/imagem06.jpg) | ![Tutorial 02](assets/imagem07.jpg) |
-| **Tutorial Explicativo 03** | **Início do Sistema (Mobile)** |
-| ![Tutorial 03](assets/imagem08.jpg) | ![Início](assets/imagem09.jpg) |
-
-> *Abaixo, a visualização completa da aplicação rodando em dispositivo móvel:*
+# 🛒 Controle de Validade Profissional (Mobile Edition)
 
 <p align="center">
-  <img src="assets/imagem10.jpg" width="400px" alt="App Mobile Full View">
+  <img src="LINK_DA_IMAGEM_BANNER" alt="Banner Controle de Validade" width="100%">
 </p>
-*O sistema adapta-se perfeitamente a diferentes tamanhos de tela e preferências de uso.*
 
->## 🛠️ Detalhes Técnicos e Diferenciais
-
-Este projeto foi construído focando na **Eficiência Operacional** do lojista. Os principais destaques técnicos são:
-
-* **Persistência de Dados:** Uso de `localStorage` para manter o banco de dados de produtos disponível mesmo sem internet.
-* **Performance UX:** Manipulação do DOM para garantir que a interface não trave durante a geração de múltiplas etiquetas.
-* **Responsividade:** CSS Grid e Flexbox garantindo que o painel de controle funcione de tablets a smartphones antigos.
-* **Segurança de Backup:** Algoritmo de exportação para arquivos `.json` permitindo a migração de dados entre dispositivos.
-
-## 📜 Licença
-
-Este projeto está licenciado sob a **Licença MIT**. Isso significa que você pode:
-* Usar o sistema para fins comerciais ou pessoais.
-* Modificar o código conforme sua necessidade.
-* Distribuir o código.
-* *Apenas pedimos que mantenha os créditos originais ao desenvolvedor.*
+<p align="center">
+  <img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5">
+  <img src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3">
+  <img src="https://img.shields.io/badge/javascript-%23F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
+</p>
 
 ---
 
->  
-> 
-## 🛠️ Tecnologias
-* HTML5 / CSS3 (Design Responsivo & Dark Mode)
-* JavaScript Vanilla (Lógica de Persistência e UI)
-* JsBarcode & Html5-QRCode
+## 📸 Demonstração do Sistema
+
+Abaixo, algumas capturas de tela da interface operando em ambiente mobile:
+
+<p align="center">
+  <img src="LINK_DA_IMAGEM_TELA_INICIAL" width="45%" title="Dashboard com Alertas">
+  <img src="LINK_DA_IMAGEM_BANCO_DADOS" width="45%" title="Configuração de Banco de Dados">
+</p>
+
+<p align="center">
+  <img src="LINK_DA_IMAGEM_PDF" width="45%" title="Relatório PDF Gerado">
+  <img src="LINK_DA_IMAGEM_DARK_MODE" width="45%" title="Interface Dark Mode">
+</p>
 
 ---
-## 👨‍💻 Desenvolvedor
-**Lucas Silva**
-* 📷 Instagram: [@lucassilvasousa_48](https://www.instagram.com/lucassilvasousa_48)
-* 💬 WhatsApp: [Numero whatsapp](https://wa.me/número whatsapp)
-* 
 
+Este projeto é um ecossistema completo para gestão de estoque e monitoramento de prazos de validade, projetado especificamente para operação em dispositivos móveis. Desenvolvido por **Lucas Silva**, Analista de Sistemas e Desenvolvedor Full Stack, o sistema foca em alta performance, usabilidade e agilidade no chão de loja.
 
-## 🤝 Contribuições
+---
 
-Sugestões e melhorias são sempre bem-vindas!
-1. Faça um **Fork** do projeto.
-2. Crie uma **Branch** para sua modificação (`git checkout -b feature/NovaFuncionalidade`).
-3. Faça o **Commit** das suas alterações.
-4. Abra um **Pull Request**.
+## 🚀 Visão Geral do Projeto
+
+O **Controle de Validade Profissional** nasceu da necessidade de eliminar perdas financeiras causadas por produtos vencidos e pela falta de organização em inventários rotativos. Diferente de planilhas complexas, este sistema oferece uma interface fluida que permite o lançamento de centenas de itens em poucos minutos, diretamente do celular.
+
+### 🎯 Objetivos Principais
+- **Redução de Desperdício:** Identificação visual imediata de itens em estado crítico.
+- **Mobilidade Total:** Desenvolvido para rodar no navegador do celular, sem necessidade de hardware caro.
+- **Relatórios Ágeis:** Geração de documentos PDF e mensagens formatadas para WhatsApp em segundos.
+- **Independência de Rede:** Funciona totalmente offline através de armazenamento local (LocalStorage).
+
+---
+
+## ⚙️ Especificações Técnicas
+
+O sistema utiliza tecnologias modernas de front-end para garantir que o software seja leve e compatível com qualquer dispositivo Android ou iOS.
+
+- **Linguagens:** HTML5, CSS3 (Custom Properties), JavaScript (ES6+).
+- **Persistência de Dados:** LocalStorage API para salvamento automático.
+- **Bibliotecas Externas:**
+  - [jsPDF](https://github.com/parallax/jsPDF): Geração de documentos PDF.
+  - [AutoTable](https://github.com/simonbengtsson/jsPDF-autotable): Formatação de tabelas profissionais.
+
+---
+
+## 📱 Guia de Versionamento e Fluxo Mobile
+
+Como o projeto é mantido 100% via dispositivos móveis, a estrutura de versionamento segue um fluxo rigoroso para garantir a evolução do código:
+
+1. **Editor de Código:** Utilização do app **Acode** para edição de scripts.
+2. **Controle de Versão:** Uso de commits granulares para cada nova funcionalidade.
+3. **Histórico de Commits:** Cada ajuste (ex: "Ajuste de PDF", "Correção de Dark Mode") recebe um commit exclusivo, criando uma linha do tempo clara de evolução.
+
+---
+
+## 📖 Manual de Operação (Passo a Passo)
+
+### 1. Configuração Inicial
+Vá até a aba **⚙️ Banco de Dados e Perfil** para configurar o nome do Responsável e da Loja. Isto personalizará todos os teus relatórios PDF automaticamente.
+
+### 2. Cadastro e Lançamento
+- Cadastre produtos fixos no **Banco** para agilizar a entrada.
+- Utilize o campo de **Pesquisa** para preenchimento automático de gramatura e nome.
+- O sistema ordena a lista automaticamente: o que vence primeiro fica no topo.
+
+### 3. Gestão de Alertas Visuais
+- 🔴 **CRÍTICO:** Ação imediata (dentro da margem de alerta).
+- 🟡 **ALERTA:** Vencimento próximo (próximos 15 dias após a margem).
+- 🟢 **ÓTIMO:** Prazo seguro.
+
+---
+
+## 💾 Segurança e Backup
+
+- **Exportar Backup:** Gera um arquivo `.json` com todos os dados. Recomendado fazer diariamente.
+- **Importar Backup:** Permite restaurar os dados em outro aparelho ou após limpeza de cache.
+
+---
+
+## ⚖️ Licença
+
+Este projeto está licenciado sob a **Licença MIT**.
+
+---
+**Desenvolvido com ☕ e Lógica por Lucas Silva | KODA Sistemas** *Araguaína, Tocantins, Brasil*
