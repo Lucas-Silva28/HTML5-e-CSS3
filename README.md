@@ -3,7 +3,7 @@
   <img src="./assets/logo-koda.png" alt="Koda Sistemas Logo" width="280px">
   <br>
   <br>
-  <a href="COLOQUE_SEU_LINK_AQUI" target="_blank">
+  <a href="https://lucas-silva28.github.io/HTML5-e-CSS3/" target="_blank">
     <img src="https://img.shields.io/badge/ACESSAR%20SISTEMA-CLIQUE%20AQUI-success?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Acessar Sistema">
   </a>
   <br>
@@ -12,7 +12,7 @@
 # 🏷️ Opt TAG Pro (Mobile Edition)
 
 <p align="center">
-  <img src="./assets/imagem01.jpg" alt="Banner Opt TAG Pro" width="100%">
+  <img src="./assets/imagem01.jpg" alt="Banner Opt TAG " width="100%">
 </p>
 
 <p align="center">
@@ -25,7 +25,7 @@
 
 ## 🔗 Link de Acesso Online
 Você pode testar o gerador de etiquetas em tempo real clicando no link abaixo:
-👉 **[Clique aqui para abrir o Opt TAG Pro](COLOQUE_SEU_LINK_AQUI)**
+👉 **[Clique aqui para abrir o Opt TAG Pro](https://lucas-silva28.github.io/HTML5-e-CSS3/)**
 
 ---
 
