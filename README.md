@@ -45,7 +45,7 @@ Abaixo, as etapas de operação da interface para geração de etiquetas:
 
 <p align="center">
   <b>📷 Scanner de código de barras via câmera</b><br>
-  <img src="./assets/imagem03.jpg" width="80%">
+  <img src="./assets/imagem06.jpg" width="80%">
 </p>
 
 <p align="center">
@@ -54,32 +54,32 @@ Abaixo, as etapas de operação da interface para geração de etiquetas:
 </p>
 
 <p align="center">
-  <b>🌙 Interface Opt TAG em Modo Escuro</b><br>
+  <b> ☀️ Interface Opt TAG em Modo Claro</b><br>
   <img src="./assets/imagem05.jpg" width="80%">
 </p>
 
 <p align="center">
   <b>🔥 Modo Oferta: Etiquetas destacadas em amarelo</b><br>
-  <img src="./assets/imagem06.jpg" width="80%">
+  <img src="./assets/imagem03.jpg" width="80%">
 </p>
 
 <p align="center">
-  <b>📂 Galeria de produtos salvos para geração rápida</b><br>
+  <b>📂 Tutorial do Sistema 01 </b><br>
   <img src="./assets/imagem07.jpg" width="80%">
 </p>
 
 <p align="center">
-  <b>🖨️ Pré-visualização das etiquetas para impressão</b><br>
+  <b>🖨️ Tutorial do Sistema 02 </b><br>
   <img src="./assets/imagem08.jpg" width="80%">
 </p>
 
 <p align="center">
-  <b>⚙️ Ajustes de contraste para leitura em tela</b><br>
+  <b>Tutorial do Sistema 03</b><br>
   <img src="./assets/imagem09.jpg" width="80%">
 </p>
 
 <p align="center">
-  <b>✅ Etiquetas geradas prontas para uso</b><br>
+  <b>🌙 Interface Opt TAG em Modo Escuro </b><br>
   <img src="./assets/imagem10.jpg" width="80%">
 </p>
 
