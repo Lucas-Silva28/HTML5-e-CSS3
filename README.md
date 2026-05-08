@@ -7,7 +7,7 @@
 # 🛒 Controle de Validade Profissional (Mobile Edition)
 
 <p align="center">
-  <img src="./assets/Imagem01.jpg" alt="Banner Controle de Validade" width="100%">
+  <img src="./assets/imagem01.jpg" alt="Banner Controle de Validade" width="100%">
 </p>
 
 <p align="center">
