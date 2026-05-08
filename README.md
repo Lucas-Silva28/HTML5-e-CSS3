@@ -23,13 +23,18 @@
 Abaixo, algumas capturas de tela da interface operando em ambiente mobile:
 
 <p align="center">
-  <img src="./assets/Imagem02.jpg" width="45%" title="Dashboard com Alertas">
-  <img src="./assets/Imagem03.jpg" width="45%" title="Configuração de Banco de Dados">
+  <img src="./assets/imagem02.jpg" width="45%" title="Dashboard com Alertas">
+  <img src="./assets/imagem03.jpg" width="45%" title="Configuração de Banco de Dados">
 </p>
 
 <p align="center">
-  <img src="./assets/Imagem04.jpg" width="45%" title="Relatório PDF Gerado">
-  <img src="./assets/Imagem05.jpg" width="45%" title="Interface Dark Mode">
+  <img src="./assets/imagem04.jpg" width="45%" title="Relatório PDF Gerado">
+  <img src="./assets/imagem05.jpg" width="45%" title="Interface Dark Mode">
+</p>
+
+<p align="center">
+  <img src="./assets/imagem06.jpg" width="45%" title="Gestão de Estoque">
+  <img src="./assets/imagem07.jpg" width="45%" title="Filtros de Busca">
 </p>
 
 ---
