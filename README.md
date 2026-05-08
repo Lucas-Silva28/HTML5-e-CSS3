@@ -12,6 +12,9 @@
 # 🏷️ Opt TAG Pro (Mobile Edition)
 
 <p align="center">
+  
+  ## 📱 Tela inicial para entrada de dados e preços
+  
   <img src="./assets/imagem01.jpg" alt="Banner Opt TAG " width="100%">
 </p>
 
@@ -33,8 +36,10 @@ Você pode testar o gerador de etiquetas em tempo real clicando no link abaixo:
 
 Abaixo, as etapas de operação da interface para geração de etiquetas:
 
+
 <p align="center">
-  <b>📱 Tela inicial para entrada de dados e preços</b><br>
+  <b>📱 Tela da galeria de produtos cadastrados </b><br>
+  
   <img src="./assets/imagem02.jpg" width="80%">
 </p>
 
