@@ -1,14 +1,10 @@
 // ============================================================
 // OPT TAG PRO — SERVICE WORKER / PWA
 // VERSÃO 4.1.1
-// RESPONSÁVEL PELO CACHE E FUNCIONAMENTO BÁSICO OFFLINE
 // ============================================================
 
-// NOME DO CACHE.
-// ALTERE A VERSÃO QUANDO PRECISAR FORÇAR UMA ATUALIZAÇÃO.
 const CACHE_NAME = "opt-tag-pro-v4.1.1";
 
-// ARQUIVOS PRINCIPAIS QUE PODEM SER ARMAZENADOS EM CACHE.
 const APP_SHELL = [
     "./",
     "./index.html",
@@ -17,7 +13,7 @@ const APP_SHELL = [
 ];
 
 // ============================================================
-// INSTALAÇÃO DO SERVICE WORKER
+// INSTALAÇÃO
 // ============================================================
 self.addEventListener("install", event => {
     event.waitUntil(
@@ -29,7 +25,7 @@ self.addEventListener("install", event => {
 
 // ============================================================
 // ATIVAÇÃO
-// REMOVE CACHES ANTIGOS PARA EVITAR CONFLITOS ENTRE VERSÕES.
+// REMOVE CACHES DE VERSÕES ANTIGAS.
 // ============================================================
 self.addEventListener("activate", event => {
     event.waitUntil(
@@ -46,22 +42,17 @@ self.addEventListener("activate", event => {
 });
 
 // ============================================================
-// INTERCEPTAÇÃO DAS REQUISIÇÕES
-//
-// PRIMEIRO TENTA PEGAR O CONTEÚDO DA INTERNET.
-// SE ESTIVER OFFLINE, USA O CACHE.
+// REQUISIÇÕES
 // ============================================================
 self.addEventListener("fetch", event => {
 
-    // NÃO INTERCEPTAR REQUISIÇÕES QUE NÃO SEJAM HTTP/HTTPS.
     if (!event.request.url.startsWith("http")) {
         return;
     }
 
-    // NÃO INTERCEPTAR REQUISIÇÕES DO FIREBASE/FIRESTORE.
-    // O FIREBASE PRECISA GERENCIAR SUA PRÓPRIA COMUNICAÇÃO.
     const url = event.request.url;
 
+    // NÃO INTERCEPTAR COMUNICAÇÕES DO FIREBASE.
     if (
         url.includes("firebaseio.com") ||
         url.includes("firestore.googleapis.com") ||
@@ -75,7 +66,6 @@ self.addEventListener("fetch", event => {
         fetch(event.request)
             .then(response => {
 
-                // SALVA UMA CÓPIA DAS RESPOSTAS VÁLIDAS.
                 if (
                     response &&
                     response.status === 200 &&
@@ -93,8 +83,6 @@ self.addEventListener("fetch", event => {
             })
             .catch(() => {
 
-                // SEM INTERNET:
-                // TENTA RECUPERAR O ARQUIVO DO CACHE.
                 return caches.match(event.request)
                     .then(cachedResponse => {
 
@@ -102,8 +90,6 @@ self.addEventListener("fetch", event => {
                             return cachedResponse;
                         }
 
-                        // SE FOR UMA NAVEGAÇÃO E NÃO EXISTIR CACHE,
-                        // TENTA ENTREGAR O INDEX.HTML.
                         if (event.request.mode === "navigate") {
                             return caches.match("./index.html");
                         }
