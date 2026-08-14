@@ -1,16 +1,15 @@
 {
-  "version": "4.1.14",
+  "version": "4.1.15",
   "mandatory": false,
   "title": "Nova versão disponível",
-  "message": "O OPT TAG PRO possui uma nova versão com melhorias na atualização e na experiência do aplicativo.",
+  "message": "O OPT TAG PRO possui uma nova versão disponível. Confira as novidades e atualize quando for conveniente.",
   "releaseDate": "2026-08-14",
   "changelog": [
-    "Preparação do novo Service Worker em segundo plano.",
-    "Central de atualização com progresso e mensagens mais claras.",
-    "Changelog exibido diretamente no aviso de atualização.",
-    "Indicador de atualização disponível após escolher Lembrar Mais Tarde.",
-    "Atualização obrigatória configurável para versões críticas.",
-    "Service Worker alinhado com a versão 4.1.14 e limpeza controlada do cache antigo.",
-    "Proteção dos dados locais e sincronizados contra limpeza pelo mecanismo de atualização."
+    "Sistema de aviso de nova versão com verificação automática em segundo plano.",
+    "Verificação adicional ao retornar ao aplicativo, reduzindo o tempo para detectar atualizações.",
+    "Atualização do Service Worker com novo identificador de cache para garantir a instalação da nova versão.",
+    "version.json tratado sem cache para evitar que o aviso de atualização fique preso em uma versão antiga.",
+    "Botão de atualização mantém a atualização sob controle do usuário, sem apagar dados locais.",
+    "Dados do usuário permanecem preservados porque a atualização atua sobre arquivos do aplicativo, não sobre localStorage ou Firestore."
   ]
 }
