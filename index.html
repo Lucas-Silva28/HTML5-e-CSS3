@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>OPT TAG PRO 2.1 ENTERPRISE - KODA SISTEMAS</title>
+    <title>OPT TAG PRO 2.1 ENTERPRISE v4.1.14 - KODA SISTEMAS</title>
     
     <!-- Bibliotecas locais (offline-first). Se o arquivo local em libs/ não
          existir, busca a CDN automaticamente como reserva. Usamos
@@ -1153,17 +1153,19 @@
     <div style="margin-bottom: 10px;">
 
         <div class="tut-step">
-            <h3>🏷️ Versão atual: 4.1.12 (Opt TAG Pro 2.1 Enterprise)</h3>
+            <h3>🏷️ Versão atual: 4.1.14 (Opt TAG Pro 2.1 Enterprise)</h3>
             <p>A versão aparece no rodapé, no final da tela. Use esse número pra saber se está com o arquivo mais novo quando for comparar cópias.</p>
         
 
 <div class="tut-step">
-  <h3>🚀 Atualizações automáticas do OPT TAG PRO</h3>
-  <p>O OPT TAG PRO possui um sistema próprio de atualização. Quando uma nova versão estiver disponível, o aplicativo verifica a atualização e pode prepará-la em segundo plano.</p>
-  <p><b>Atualizar agora:</b> instala a nova versão e reinicia o aplicativo quando necessário.</p>
-  <p><b>Lembrar mais tarde:</b> permite continuar usando a versão atual. O aviso será apresentado novamente em uma próxima oportunidade.</p>
-  <p><b>Importante:</b> a atualização dos arquivos do aplicativo não deve apagar os produtos, configurações ou dados sincronizados no Firebase. Os dados do usuário são tratados separadamente dos arquivos do aplicativo.</p>
-  <div class="koda-scan-confirm-hint">💡 <b>Dica:</b> antes de publicar uma atualização importante, confira o número da versão e o changelog para saber exatamente o que mudou.</div>
+  <h3>🚀 Atualizações do OPT TAG PRO</h3>
+  <p>Quando uma versão mais nova é publicada, o aplicativo consulta a versão disponível e pode preparar o novo Service Worker em segundo plano enquanto você continua usando o sistema.</p>
+  <p><b>🔔 Nova versão:</b> mostra a versão, a mensagem e o changelog com as principais melhorias.</p>
+  <p><b>⬆️ Atualizar agora:</b> prepara e ativa a nova versão e reinicia o aplicativo quando necessário.</p>
+  <p><b>🕐 Lembrar mais tarde:</b> fecha o aviso sem bloquear seu trabalho. A atualização continua disponível pelo indicador de atualização.</p>
+  <p><b>🔴 Atualização obrigatória:</b> versões críticas podem exigir atualização e não oferecer a opção de adiar.</p>
+  <p><b>🛡️ Seus dados:</b> atualizar os arquivos do aplicativo não apaga produtos, configurações ou dados sincronizados no Firebase. O cache da aplicação é separado dos dados do usuário.</p>
+  <div class="koda-scan-confirm-hint">💡 <b>Como funciona:</b> a versão instalada e a versão publicada são comparadas. O aviso só aparece quando a versão disponível é maior.</div>
 </div>
 
 <div class="tut-step koda-double-scan-tutorial">
@@ -1183,13 +1185,20 @@
 </div>
 
         <div class="tut-step">
+            <h3>🚀 v4.1.14 — Atualização avançada do PWA</h3>
+            <p>Central de atualização aprimorada com preparação em segundo plano, changelog, opção de lembrar mais tarde, atualização obrigatória configurável, indicador persistente de atualização disponível e melhorias visuais nas etapas de atualização.</p>
+            <p>O controle de versão fica alinhado entre o aplicativo, o Service Worker e o arquivo remoto de versão.</p>
+        </div>
+
+        <div class="tut-step">
             <h3>🚀 v4.1.12 — Câmera de edição em overlay</h3>
             <p>A câmera usada durante a edição agora abre em um overlay próprio, acima do modal de edição. O scanner existente continua sendo reutilizado e a confirmação por duas leituras iguais permanece ativa.</p>
         </div>
 
         <div class="tut-step">
             <h3>📝 Histórico de atualizações</h3>
-            <p><b>v4.1.12 — Câmera de edição + Koda Update Engine</b> — Overlay próprio para a câmera durante a edição, confirmação dupla de código e sistema de atualização com verificação de versão, preparo em segundo plano, aviso de nova versão, atualização imediata, opção de lembrar mais tarde, changelog e modo de atualização obrigatória configurável.</p>
+            <p><b>v4.1.14 — Atualização avançada do PWA</b> — Central de atualização com preparação em segundo plano, aviso animado, changelog, indicador persistente, opção de lembrar mais tarde e atualização obrigatória configurável, mantendo os dados do usuário separados do cache do aplicativo.</p>
+<p><b>v4.1.12 — Câmera de edição + Koda Update Engine</b> — Overlay próprio para a câmera durante a edição, confirmação dupla de código e base inicial do sistema de atualização por versão.</p>
             <p><b>v4.1.7 — Firebase seguro</b> — Sincronização com detecção de diferenças entre aparelho e nuvem, confirmação antes de excluir dados da conta, recuperação de produtos ausentes no aparelho, exposição segura do StorageEngine para o módulo Firebase e documentação ampliada do fluxo de nuvem.</p>
             <p style="margin-top:6px;"><b>v4.0.1 — 2.1 Enterprise</b> — X inteligente para limpar campos, teclado numérico somente quando necessário, edição completa de produtos, ações Editar/Gerar/Excluir na galeria, fila de impressão mais clara e etiquetas organizadas uma abaixo da outra. O código de barras agora é convertido em imagem SVG embutida para aumentar a compatibilidade com a tela, impressão física e Salvar como PDF.</p>
             <p style="margin-top:6px;"><b>v3.7.5</b> — Corrigido bug crítico: código de barras ficava em branco (na tela e no PDF) quando as bibliotecas locais não estavam na pasta libs/. Versão movida do topo pro rodapé. Botão de tema agora mostra 🌙 no modo escuro e ☀️ no modo claro, com giro suave ao trocar.</p>
@@ -1588,7 +1597,7 @@
     // --- VERSÃO DO SISTEMA ---
     // Atualize aqui a cada nova entrega. O badge no header e o tutorial
     // (aba de ajuda) puxam esse valor automaticamente.
-    const APP_VERSION = "4.1.13";
+    const APP_VERSION = "4.1.14";
     document.addEventListener('DOMContentLoaded', () => {
         const badge = document.getElementById('app-version-badge');
         if (badge) badge.textContent = `v${APP_VERSION}`;
@@ -2457,11 +2466,11 @@
             e.status.textContent='Preparando a atualização…';
             try{
                 await prepareServiceWorker();
-                e.status.textContent='Baixando e preparando a nova versão…';
+                e.status.textContent='⬇️ Baixando e preparando a nova versão em segundo plano…';
                 if(remoteInfo?.mandatory) e.status.textContent='Atualização obrigatória: finalizando…';
                 await new Promise(r=>setTimeout(r,350));
                 await activatePrepared();
-                e.status.textContent='Atualização pronta. Reiniciando…';
+                e.status.textContent='✅ Atualização pronta. Reiniciando o OPT TAG PRO…';
             }catch(err){
                 console.error('[KODA UPDATE]',err);
                 e.status.textContent='Não foi possível concluir agora. Tente novamente quando estiver online.';
