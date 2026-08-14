@@ -1,7 +1,13 @@
 // OPT TAG PRO — SERVICE WORKER / PWA
-// VERSÃO 4.1.14
+// VERSÃO 4.1.15
+//
+// IMPORTANTE:
+// 1) O NOME DO CACHE MUDA A CADA RELEASE.
+// 2) ISSO FAZ O NAVEGADOR INSTALAR O SERVICE WORKER NOVO.
+// 3) O version.json NÃO É ARMAZENADO PELO CACHE DO SW.
+// 4) OS DADOS DO USUÁRIO FICAM FORA DO CACHE: LOCALSTORAGE/FIRESTORE NÃO SÃO APAGADOS.
 
-const CACHE_NAME = "opt-tag-pro-v4.1.14";
+const CACHE_NAME = "opt-tag-pro-v4.1.15";
 
 const APP_SHELL = [
     "./",
@@ -39,8 +45,20 @@ self.addEventListener("activate", event => {
 self.addEventListener("fetch", event => {
     if (!event.request.url.startsWith("http")) return;
 
+    const requestUrl = new URL(event.request.url);
     const url = event.request.url;
 
+    // O ARQUIVO DE CONTROLE DE VERSÃO PRECISA SER LIDO DO SERVIDOR.
+    // NÃO DEIXAMOS UMA CÓPIA ANTIGA DO SW RESPONDER POR ELE.
+    if (requestUrl.pathname.endsWith("/version.json")) {
+        event.respondWith(
+            fetch(event.request, { cache: "no-store" })
+                .catch(() => caches.match(event.request))
+        );
+        return;
+    }
+
+    // SERVIÇOS EXTERNOS NÃO DEVEM SER INTERCEPTADOS.
     if (
         url.includes("firebaseio.com") ||
         url.includes("firestore.googleapis.com") ||
@@ -48,8 +66,9 @@ self.addEventListener("fetch", event => {
         url.includes("gstatic.com")
     ) return;
 
-    if (new URL(url).pathname.endsWith("/version.json")) return;
-
+    // ESTRATÉGIA NETWORK-FIRST:
+    // COM INTERNET, O APP TENTA SEMPRE BUSCAR A VERSÃO MAIS RECENTE.
+    // SEM INTERNET, USA A CÓPIA LOCAL PARA MANTER O PWA OPERACIONAL.
     event.respondWith(
         fetch(event.request)
             .then(response => {
