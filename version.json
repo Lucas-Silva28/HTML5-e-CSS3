@@ -1,15 +1,12 @@
 {
-  "version": "4.1.12",
+  "version": "4.1.13",
   "mandatory": false,
-  "title": "OPT TAG PRO v4.1.12",
-  "message": "Nova versão do OPT TAG PRO disponível com melhorias na câmera, atualização do PWA e estabilidade.",
+  "title": "Nova versão disponível",
+  "message": "O OPT TAG PRO possui uma nova versão com melhorias e correções.",
   "releaseDate": "2026-08-13",
   "changelog": [
-    "Overlay próprio para a câmera durante a edição.",
-    "Dupla leitura mantida para confirmar códigos com segurança.",
-    "Novo sistema Koda Update Engine para avisar e preparar atualizações.",
-    "Atualização em segundo plano e botão Atualizar Agora.",
-    "Opção Lembrar Mais Tarde e atualização obrigatória configurável.",
-    "Dados locais e dados do Firebase não são apagados pelo processo de atualização."
+    "Melhorias no sistema de atualização.",
+    "Melhorias de estabilidade do aplicativo.",
+    "Preparação para futuras atualizações automáticas."
   ]
 }
