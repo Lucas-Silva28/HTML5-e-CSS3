@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>OPT TAG PRO 2.1 ENTERPRISE v4.1.14 - KODA SISTEMAS</title>
+    <title>OPT TAG PRO 2.1 ENTERPRISE v4.1.15 - KODA SISTEMAS</title>
     
     <!-- Bibliotecas locais (offline-first). Se o arquivo local em libs/ não
          existir, busca a CDN automaticamente como reserva. Usamos
@@ -1153,7 +1153,7 @@
     <div style="margin-bottom: 10px;">
 
         <div class="tut-step">
-            <h3>🏷️ Versão atual: 4.1.14 (Opt TAG Pro 2.1 Enterprise)</h3>
+            <h3>🏷️ Versão atual: 4.1.15 (Opt TAG Pro 2.1 Enterprise)</h3>
             <p>A versão aparece no rodapé, no final da tela. Use esse número pra saber se está com o arquivo mais novo quando for comparar cópias.</p>
         
 
@@ -1185,6 +1185,10 @@
 </div>
 
         <div class="tut-step">
+            <h3>🚀 v4.1.15 — Controle de atualização confirmado</h3>
+            <p>A nova versão é detectada sem alterar a versão em execução. O novo Service Worker permanece em espera até o usuário clicar em <b>ATUALIZAR AGORA</b>. <b>MAIS TARDE</b> mantém a atualização pendente.</p>
+            <p>Produtos, configurações, localStorage e Firestore não são apagados pela atualização.</p>
+
             <h3>🚀 v4.1.14 — Atualização avançada do PWA</h3>
             <p>Central de atualização aprimorada com preparação em segundo plano, changelog, opção de lembrar mais tarde, atualização obrigatória configurável, indicador persistente de atualização disponível e melhorias visuais nas etapas de atualização.</p>
             <p>O controle de versão fica alinhado entre o aplicativo, o Service Worker e o arquivo remoto de versão.</p>
@@ -1528,7 +1532,7 @@
     <div id="koda-update-panel">
         <div class="koda-update-icon">🚀</div>
         <h2 id="koda-update-title" class="koda-update-title">Nova versão disponível</h2>
-        <div id="koda-update-version" class="koda-update-version">OPT TAG PRO v4.1.13</div>
+        <div id="koda-update-version" class="koda-update-version">OPT TAG PRO v4.1.15</div>
         <div class="koda-update-live-pill" aria-hidden="true">● ATUALIZAÇÃO DISPONÍVEL</div>
         <p id="koda-update-message" class="koda-update-message">Uma nova versão do OPT TAG PRO está disponível.</p>
         <div class="koda-update-changelog">
@@ -1595,9 +1599,9 @@
 <script>
     // --- FILA OPERACIONAL ---
     // --- VERSÃO DO SISTEMA ---
-    // Atualize aqui a cada nova entrega. O badge no header e o tutorial
+    // ATUALIZE AQUI A CADA NOVA ENTREGA. O BADGE NO HEADER E O TUTORIAL
     // (aba de ajuda) puxam esse valor automaticamente.
-    const APP_VERSION = "4.1.14";
+    const APP_VERSION = "4.1.15";
     document.addEventListener('DOMContentLoaded', () => {
         const badge = document.getElementById('app-version-badge');
         if (badge) badge.textContent = `v${APP_VERSION}`;
@@ -2356,7 +2360,7 @@
     const KodaUpdateEngine = (() => {
         const VERSION_URL = './version.json';
         const DISMISS_KEY = 'koda_update_dismissed_version';
-        const CHECK_INTERVAL = 6 * 60 * 60 * 1000;
+        const CHECK_INTERVAL = 30 * 60 * 1000;
         let registration = null;
         let pendingWorker = null;
         let remoteInfo = null;
@@ -2502,9 +2506,19 @@
         }
         async function init(){
             bind();
-            // Atualização em segundo plano: primeiro verifica a versão remota.
+            // VERIFICAÇÃO EM SEGUNDO PLANO: NÃO INTERROMPE O USUÁRIO.
+            // O version.json usa cache-busting, portanto a detecção da nova versão
+            // independe de o Service Worker antigo já ter sido atualizado.
             setTimeout(()=>check(false),1800);
             setInterval(()=>check(false),CHECK_INTERVAL);
+
+            // AO VOLTAR PARA O APLICATIVO, FAZ UMA VERIFICAÇÃO EXTRA.
+            // Isso reduz o intervalo percebido quando o usuário ficou dias sem abrir.
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') {
+                    setTimeout(() => check(false), 500);
+                }
+            });
         }
         return {init,check,show};
     })();
