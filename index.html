@@ -1532,7 +1532,7 @@
     <div id="koda-update-panel">
         <div class="koda-update-icon">🚀</div>
         <h2 id="koda-update-title" class="koda-update-title">Nova versão disponível</h2>
-        <div id="koda-update-version" class="koda-update-version">OPT TAG PRO v4.1.15</div>
+        <div id="koda-update-version" class="koda-update-version">Versão atual: v4.1.15 • Nova versão: v4.1.15</div>
         <div class="koda-update-live-pill" aria-hidden="true">● ATUALIZAÇÃO DISPONÍVEL</div>
         <p id="koda-update-message" class="koda-update-message">Uma nova versão do OPT TAG PRO está disponível.</p>
         <div class="koda-update-changelog">
@@ -2359,167 +2359,276 @@
     // ============================================================================
     const KodaUpdateEngine = (() => {
         const VERSION_URL = './version.json';
-        const DISMISS_KEY = 'koda_update_dismissed_version';
+        const PENDING_KEY = 'OPT_TAG_PRO_PENDING_UPDATE';
         const CHECK_INTERVAL = 30 * 60 * 1000;
         let registration = null;
         let pendingWorker = null;
         let remoteInfo = null;
-        let prepared = false;
+        let updateRequested = false;
+        let reloadInProgress = false;
 
         function compareVersions(a, b) {
             const pa = String(a || '0').replace(/^v/i,'').split('.').map(n => parseInt(n,10) || 0);
             const pb = String(b || '0').replace(/^v/i,'').split('.').map(n => parseInt(n,10) || 0);
-            for (let i=0;i<Math.max(pa.length,pb.length);i++) {
+            for (let i=0; i<Math.max(pa.length,pb.length); i++) {
                 const x=pa[i]||0, y=pb[i]||0;
-                if (x>y) return 1; if (x<y) return -1;
+                if (x>y) return 1;
+                if (x<y) return -1;
             }
             return 0;
         }
-        function els(){ return {
-            backdrop:document.getElementById('koda-update-backdrop'),
-            version:document.getElementById('koda-update-version'),
-            message:document.getElementById('koda-update-message'),
-            list:document.getElementById('koda-update-changelog-list'),
-            now:document.getElementById('koda-update-now'),
-            later:document.getElementById('koda-update-later'),
-            progress:document.getElementById('koda-update-progress'),
-            status:document.getElementById('koda-update-status'),
-            badge:document.getElementById('koda-update-badge'),
-            badgeBtn:document.getElementById('koda-update-badge-btn')
-        }; }
-        function show(info, force=false){
-            const e=els(); remoteInfo=info;
-            e.version.textContent=`OPT TAG PRO v${info.version}`;
+
+        function els() {
+            return {
+                backdrop:document.getElementById('koda-update-backdrop'),
+                version:document.getElementById('koda-update-version'),
+                message:document.getElementById('koda-update-message'),
+                list:document.getElementById('koda-update-changelog-list'),
+                now:document.getElementById('koda-update-now'),
+                later:document.getElementById('koda-update-later'),
+                progress:document.getElementById('koda-update-progress'),
+                status:document.getElementById('koda-update-status'),
+                badge:document.getElementById('koda-update-badge'),
+                badgeBtn:document.getElementById('koda-update-badge-btn')
+            };
+        }
+
+        function setPending(version, info) {
+            localStorage.setItem(PENDING_KEY, JSON.stringify({
+                version:String(version),
+                detectedAt:new Date().toISOString(),
+                releaseDate:info?.releaseDate || null
+            }));
+        }
+
+        function getPending() {
+            try {
+                const raw=localStorage.getItem(PENDING_KEY);
+                return raw ? JSON.parse(raw) : null;
+            } catch (_) {
+                return null;
+            }
+        }
+
+        function clearPending() {
+            localStorage.removeItem(PENDING_KEY);
+        }
+
+        function show(info) {
+            const e=els();
+            remoteInfo=info;
+            e.version.textContent=`Versão atual: v${APP_VERSION} • Nova versão: v${info.version}`;
             e.message.textContent=info.message || 'Uma nova versão do OPT TAG PRO está disponível com melhorias.';
             e.list.innerHTML='';
-            (Array.isArray(info.changelog)?info.changelog:[]).forEach(item=>{ const li=document.createElement('li'); li.textContent=item; e.list.appendChild(li); });
-            if(!e.list.children.length){ const li=document.createElement('li'); li.textContent='Correções e melhorias de estabilidade.'; e.list.appendChild(li); }
-            e.now.textContent=info.mandatory ? '⬆️ ATUALIZAR AGORA' : '⬆️ ATUALIZAR AGORA';
+            (Array.isArray(info.changelog)?info.changelog:[]).forEach(item => {
+                const li=document.createElement('li');
+                li.textContent=item;
+                e.list.appendChild(li);
+            });
+            if(!e.list.children.length) {
+                const li=document.createElement('li');
+                li.textContent='Correções e melhorias de estabilidade.';
+                e.list.appendChild(li);
+            }
+            e.now.textContent='⬆️ ATUALIZAR AGORA';
             e.later.style.display=info.mandatory ? 'none' : 'flex';
             e.backdrop.classList.add('active');
             e.badge.classList.remove('active');
             e.status.textContent='';
             e.progress.classList.remove('active');
-            if (force) localStorage.removeItem(DISMISS_KEY);
         }
-        function hide(){ els().backdrop.classList.remove('active'); }
-        function remindLater(){
-            if(remoteInfo?.version) localStorage.setItem(DISMISS_KEY, remoteInfo.version);
+
+        function hide() {
+            els().backdrop.classList.remove('active');
+        }
+
+        function remindLater() {
+            if(remoteInfo?.version) {
+                setPending(remoteInfo.version, remoteInfo);
+            }
             hide();
-            if(remoteInfo?.mandatory) return;
-            setTimeout(()=>{ if(remoteInfo && compareVersions(remoteInfo.version,APP_VERSION)>0) els().badge.classList.add('active'); }, 1000);
+            if(remoteInfo?.version) {
+                els().badge.classList.add('active');
+            }
         }
-        async function fetchInfo(){
-            try{
-                const r=await fetch(`${VERSION_URL}?t=${Date.now()}`, {cache:'no-store', headers:{'Cache-Control':'no-cache'}});
+
+        async function fetchInfo() {
+            try {
+                const r=await fetch(`${VERSION_URL}?_=${Date.now()}`, {
+                    cache:'no-store',
+                    headers:{'Cache-Control':'no-cache'}
+                });
                 if(!r.ok) throw new Error(`HTTP ${r.status}`);
-                return await r.json();
-            }catch(e){ console.warn('[KODA UPDATE] Não foi possível verificar a versão:',e); return null; }
+                const info=await r.json();
+                if(!info?.version) throw new Error('version.json sem campo "version".');
+                return info;
+            } catch(e) {
+                console.warn('[KODA UPDATE] Não foi possível verificar a versão:',e);
+                return null;
+            }
         }
-        async function prepareServiceWorker(){
+
+        async function prepareServiceWorker() {
             if(!('serviceWorker' in navigator)) return false;
-            try{
-                registration = registration || await navigator.serviceWorker.getRegistration() || await navigator.serviceWorker.register('./service-worker.js');
-                if (registration.waiting) { pendingWorker = registration.waiting; return true; }
+            try {
+                registration = registration ||
+                    await navigator.serviceWorker.getRegistration() ||
+                    await navigator.serviceWorker.register('./service-worker.js');
+
+                if(registration.waiting) {
+                    pendingWorker=registration.waiting;
+                    return true;
+                }
+
                 await registration.update();
-                if (registration.waiting) { pendingWorker = registration.waiting; return true; }
+
+                if(registration.waiting) {
+                    pendingWorker=registration.waiting;
+                    return true;
+                }
+
                 return await new Promise(resolve => {
-                    let finished = false;
-                    const done = (value) => { if(finished) return; finished=true; registration.removeEventListener('updatefound', onFound); resolve(value); };
-                    const onFound = () => {
-                        const worker = registration.installing;
-                        if (!worker) return;
+                    let finished=false;
+                    const done=value => {
+                        if(finished) return;
+                        finished=true;
+                        registration.removeEventListener('updatefound', onFound);
+                        resolve(value);
+                    };
+                    const onFound=() => {
+                        const worker=registration.installing;
+                        if(!worker) return;
                         worker.addEventListener('statechange', () => {
-                            if (worker.state === 'installed') {
-                                pendingWorker = worker;
-                                done(true);
-                            } else if (worker.state === 'redundant') {
+                            if(worker.state === 'installed') {
+                                pendingWorker=registration.waiting || worker;
+                                done(!!pendingWorker);
+                            } else if(worker.state === 'redundant') {
                                 done(false);
                             }
                         });
                     };
                     registration.addEventListener('updatefound', onFound);
-                    if (registration.installing) onFound();
-                    setTimeout(() => done(!!registration.waiting), 5000);
+                    if(registration.installing) onFound();
+                    setTimeout(() => done(!!registration.waiting), 10000);
                 });
-            }catch(e){ console.warn('[KODA UPDATE] Service Worker:',e); return false; }
+            } catch(e) {
+                console.warn('[KODA UPDATE] Falha ao preparar Service Worker:',e);
+                return false;
+            }
         }
-        async function activatePrepared(){
-            if(pendingWorker){
-                pendingWorker.postMessage({type:'SKIP_WAITING'});
-                prepared=true;
-                return;
+
+        function activatePrepared() {
+            const worker=pendingWorker || registration?.waiting;
+            if(!worker) {
+                throw new Error('Novo Service Worker não entrou em waiting.');
             }
-            if(registration?.waiting){
-                registration.waiting.postMessage({type:'SKIP_WAITING'});
-                prepared=true;
-                return;
-            }
-            if(registration){
-                await registration.update();
-                if(registration.waiting){ registration.waiting.postMessage({type:'SKIP_WAITING'}); prepared=true; return; }
-            }
-            // Se o servidor já entregou os novos arquivos e não há SW waiting,
-            // recarregamos para que o navegador conclua o ciclo normal de update.
-            prepared=true;
-            window.location.reload();
+
+            updateRequested=true;
+            worker.postMessage({type:'SKIP_WAITING'});
         }
-        async function updateNow(){
+
+        async function updateNow() {
             const e=els();
-            e.now.disabled=true; e.later.disabled=true; e.progress.classList.add('active');
-            e.status.textContent='Preparando a atualização…';
-            try{
-                await prepareServiceWorker();
-                e.status.textContent='⬇️ Baixando e preparando a nova versão em segundo plano…';
-                if(remoteInfo?.mandatory) e.status.textContent='Atualização obrigatória: finalizando…';
-                await new Promise(r=>setTimeout(r,350));
-                await activatePrepared();
-                e.status.textContent='✅ Atualização pronta. Reiniciando o OPT TAG PRO…';
-            }catch(err){
+            e.now.disabled=true;
+            e.later.disabled=true;
+            e.progress.classList.add('active');
+            e.status.textContent='Verificando a nova versão…';
+
+            try {
+                const freshInfo=await fetchInfo();
+                if(!freshInfo?.version || compareVersions(freshInfo.version,APP_VERSION)<=0) {
+                    clearPending();
+                    e.status.textContent='A versão publicada não está mais disponível. O aplicativo continua na versão atual.';
+                    setTimeout(hide,1800);
+                    return;
+                }
+
+                remoteInfo=freshInfo;
+                setPending(freshInfo.version, freshInfo);
+
+                e.version.textContent=`Versão atual: v${APP_VERSION} • Nova versão: v${freshInfo.version}`;
+                e.status.textContent='Preparando a atualização…';
+
+                const prepared=await prepareServiceWorker();
+                if(!prepared || !(pendingWorker || registration?.waiting)) {
+                    throw new Error('A nova versão ainda não está disponível no Service Worker.');
+                }
+
+                e.status.textContent='⬇️ Nova versão preparada. Ativando após sua confirmação…';
+                activatePrepared();
+            } catch(err) {
                 console.error('[KODA UPDATE]',err);
+                updateRequested=false;
                 e.status.textContent='Não foi possível concluir agora. Tente novamente quando estiver online.';
-                e.now.disabled=false; e.later.disabled=false;
+                e.now.disabled=false;
+                e.later.disabled=false;
                 e.progress.classList.remove('active');
             }
         }
-        async function check(force=false){
+
+        async function check(force=false) {
             const info=await fetchInfo();
-            if(!info?.version || compareVersions(info.version,APP_VERSION)<=0) return;
+            if(!info?.version || compareVersions(info.version,APP_VERSION)<=0) {
+                if(info?.version && compareVersions(info.version,APP_VERSION)<=0) {
+                    clearPending();
+                    els().badge.classList.remove('active');
+                }
+                return;
+            }
+
             remoteInfo=info;
-            const dismissed=localStorage.getItem(DISMISS_KEY);
-            if(!force && dismissed===info.version && !info.mandatory){ els().badge.classList.add('active'); return; }
-            // Solicita ao navegador que procure o novo Service Worker enquanto o
-            // usuário ainda está usando o aplicativo.
+            setPending(info.version, info);
+
+            // O SW pode ser preparado em waiting sem alterar o SW que controla
+            // a página atual. A ativação só ocorre após ATUALIZAR AGORA.
             await prepareServiceWorker();
-            show(info, force);
+
+            if(!force && els().backdrop.classList.contains('active')) return;
+            show(info);
         }
-        function bind(){
+
+        function bind() {
             const e=els();
             e.now.addEventListener('click',updateNow);
             e.later.addEventListener('click',remindLater);
-            e.badgeBtn.addEventListener('click',()=>remoteInfo && show(remoteInfo));
-            if('serviceWorker' in navigator){
-                navigator.serviceWorker.addEventListener('controllerchange',()=>{
-                    if(prepared){ window.location.reload(); }
+            e.badgeBtn.addEventListener('click',async () => {
+                const info=remoteInfo || await fetchInfo();
+                if(info && compareVersions(info.version,APP_VERSION)>0) show(info);
+                else els().badge.classList.remove('active');
+            });
+
+            if('serviceWorker' in navigator) {
+                navigator.serviceWorker.addEventListener('controllerchange',() => {
+                    if(!updateRequested || reloadInProgress) return;
+                    reloadInProgress=true;
+                    clearPending();
+                    window.location.reload();
                 });
             }
         }
-        async function init(){
-            bind();
-            // VERIFICAÇÃO EM SEGUNDO PLANO: NÃO INTERROMPE O USUÁRIO.
-            // O version.json usa cache-busting, portanto a detecção da nova versão
-            // independe de o Service Worker antigo já ter sido atualizado.
-            setTimeout(()=>check(false),1800);
-            setInterval(()=>check(false),CHECK_INTERVAL);
 
-            // AO VOLTAR PARA O APLICATIVO, FAZ UMA VERIFICAÇÃO EXTRA.
-            // Isso reduz o intervalo percebido quando o usuário ficou dias sem abrir.
-            document.addEventListener('visibilitychange', () => {
-                if (document.visibilityState === 'visible') {
-                    setTimeout(() => check(false), 500);
+        async function init() {
+            bind();
+
+            // Primeira verificação após a inicialização do aplicativo.
+            setTimeout(() => check(false),1800);
+
+            // Verificação periódica para sessões longas.
+            setInterval(() => check(false),CHECK_INTERVAL);
+
+            // Verificação ao retornar ao primeiro plano.
+            document.addEventListener('visibilitychange',() => {
+                if(document.visibilityState === 'visible') {
+                    setTimeout(() => check(false),500);
                 }
             });
+
+            // Também verifica quando a janela volta ao foco.
+            window.addEventListener('focus',() => {
+                setTimeout(() => check(false),500);
+            });
         }
+
         return {init,check,show};
     })();
     window.KodaUpdateEngine=KodaUpdateEngine;

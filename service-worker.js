@@ -20,12 +20,15 @@ self.addEventListener("install", event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(cache => cache.addAll(APP_SHELL))
-            .then(() => self.skipWaiting())
+            // NÃO ATIVAR AUTOMATICAMENTE.
+            // O NOVO SERVICE WORKER FICA EM WAITING ATÉ O USUÁRIO
+            // CLICAR EM "ATUALIZAR AGORA".
     );
 });
 
 self.addEventListener("message", event => {
     if (event.data && event.data.type === "SKIP_WAITING") {
+        // SOMENTE A AÇÃO EXPLÍCITA DO USUÁRIO PODE ATIVAR O NOVO SW.
         self.skipWaiting();
     }
 });
@@ -53,7 +56,6 @@ self.addEventListener("fetch", event => {
     if (requestUrl.pathname.endsWith("/version.json")) {
         event.respondWith(
             fetch(event.request, { cache: "no-store" })
-                .catch(() => caches.match(event.request))
         );
         return;
     }
